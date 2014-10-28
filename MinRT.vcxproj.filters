@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="NetworkStuff.h" />
+    <ClInclude Include="SDLstuff.h" />
+    <ClInclude Include="MinRT.h" />
+    <ClInclude Include="OpenGLstuff.h" />
+    <ClInclude Include="WindowsHelper.h" />
+    <ClInclude Include="EmbreeStuff.h" />
+    <ClInclude Include="Etc1Fast.h">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessRGB.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="TablesETC1.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="VectorETC1.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_RayQuery.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_RayTracer.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_Task.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_TaskManager.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_TaskRenderTile.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_Camera.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector2.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector3.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="RT_FrameBuffer.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="MathETC1.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessCommon.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
+    <ClInclude Include="CVector2i.h">
+      <Filter>math</Filter>
+    </ClInclude>
+    <ClInclude Include="ForceInline.h" />
+    <ClInclude Include="RT_ShadingInfo.h">
+      <Filter>raytracer</Filter>
+    </ClInclude>
+    <ClInclude Include="StanfordBunny.h">
+      <Filter>models</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="NetworkStuff.cpp" />
+    <ClCompile Include="SDLstuff.cpp" />
+    <ClCompile Include="MinRT.cpp" />
+    <ClCompile Include="OpenGLstuff.cpp" />
+    <ClCompile Include="WindowsHelper.cpp" />
+    <ClCompile Include="EmbreeStuff.cpp" />
+    <ClCompile Include="Etc1Fast.cpp">
+      <Filter>etc1</Filter>
+    </ClCompile>
+    <ClCompile Include="ProcessRGB.cpp">
+      <Filter>etc1</Filter>
+    </ClCompile>
+    <ClCompile Include="TablesETC1.cpp">
+      <Filter>etc1</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_RayQuery.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_RayTracer.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_Task.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_TaskManager.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_TaskRenderTile.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_Camera.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector2.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector3.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_FrameBuffer.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+    <ClCompile Include="CVector2i.cpp">
+      <Filter>math</Filter>
+    </ClCompile>
+    <ClCompile Include="RT_ShadingInfo.cpp">
+      <Filter>raytracer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="etc1">
+      <UniqueIdentifier>{42a142ab-49d7-44eb-bf1e-24494c2a0b15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="raytracer">
+      <UniqueIdentifier>{2e9d93ab-b072-46a8-b216-ec5cee9eb780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="math">
+      <UniqueIdentifier>{9141f5ba-9e03-459d-a701-e83cef2ef9a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="models">
+      <UniqueIdentifier>{a223f51d-3af9-4ff4-9714-b9fc95a821c1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
