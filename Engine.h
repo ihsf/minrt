@@ -92,7 +92,7 @@ class Engine {
 		static int screenWidthGL; 
 		static int screenHeightGL; 
 
-		static int RENDERTILE_SIZE;
+		static int RENDERLINE_SIZE;
 
 		// keys & mouse
 		static bool upKey;

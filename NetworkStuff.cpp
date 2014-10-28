@@ -83,6 +83,7 @@ void NetworkStuff::receiveInitPacket(){
 
   int rectSizeX = msgBuffer.rectRight - msgBuffer.rectLeft + 1;  // +1 to count in pixel 0
   int rectSizeY = msgBuffer.rectTop -  msgBuffer.rectBottom + 1;
+#if 0
   if( rectSizeX > Engine::RENDERTILE_SIZE && rectSizeY > Engine::RENDERTILE_SIZE){
     int remainingPixelsX = rectSizeX % Engine::RENDERTILE_SIZE;
     int remainingPixelsY = rectSizeY % Engine::RENDERTILE_SIZE;
@@ -100,6 +101,7 @@ void NetworkStuff::receiveInitPacket(){
       cout << "==============================" << endl;
     }
   }
+#endif
 }
 
 void NetworkStuff::shutdown(){

@@ -77,19 +77,15 @@ void RT_RayTracer::createRenderingTasks(){
 
   const int sizeX = frameBuffer->getSizeX();
   const int sizeY = frameBuffer->getSizeY();
-  const int numTiles = (sizeX * sizeY) / (Engine::RENDERTILE_SIZE * Engine::RENDERTILE_SIZE);
-  const int numTilesPerRow = frameBuffer->getSizeX() / Engine::RENDERTILE_SIZE;
+  const int numTiles = sizeY / Engine::RENDERLINE_SIZE;
 
   char debugTaskName[] = "rendTile";
   char fullDebugTaskName[DEBUG_STRING_SIZE];
 
 	// taking tiles from left corner to right corner, then top to bottom
   for(int i = 0; i < numTiles; i++){
-    int tileX = i % numTilesPerRow;
-    int tileY = i / numTilesPerRow;
-    
-    startPixel.x = tileX * Engine::RENDERTILE_SIZE;
-    startPixel.y = tileY * Engine::RENDERTILE_SIZE;
+    startPixel.x = 0;
+    startPixel.y = i * Engine::RENDERLINE_SIZE;
 
     RT_TaskRenderTile* taskRenderTile = new RT_TaskRenderTile(&startPixel, internalCamera, frameBuffer, i);
     taskManager.addTaskRenderTile(taskRenderTile);

@@ -5,7 +5,7 @@ int Engine::screenHeightRT =  720;  // needs to be divisable by RENDERTILE_SIZE
 int Engine::screenWidthGL = 1280;
 int Engine::screenHeightGL = 720;
 
-int Engine::RENDERTILE_SIZE = 40;
+int Engine::RENDERLINE_SIZE = 4;
 
 // keys & mouse
 bool Engine::upKey = false;
@@ -56,7 +56,7 @@ CVector2i Engine::relativeMouseMotion;
 
 void Engine::init(int argc, char *argv[]){
 	cout << "Engine initialized." << endl;
-  if ((screenWidthRT % RENDERTILE_SIZE != 0) || screenHeightRT % RENDERTILE_SIZE != 0){
+  if (screenHeightRT % RENDERLINE_SIZE != 0){
     cout << "Invalid screenWidthRT or screenHeightRT for RENDERTILE_SIZE" << endl;
     exit(1);
   }

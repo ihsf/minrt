@@ -21,7 +21,7 @@ void RT_TaskRenderTile::run(){
 	float sizeYminus1Half = ((float)sizeY - 1.0f) * 0.5f;	
 
 	CVector3 color;
-	CVector2i endPixel(startPixel.x + Engine::RENDERTILE_SIZE, startPixel.y + Engine::RENDERTILE_SIZE);
+	CVector2i endPixel(startPixel.x + sizeX, startPixel.y + Engine::RENDERLINE_SIZE);
 
   RT_RayQuery rayQuery[8];
   int xcoord[8];
