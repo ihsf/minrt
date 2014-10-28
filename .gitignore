@@ -1,0 +1,11 @@
+*.obj
+*.exe
+*.idb
+*.ilk
+*.log
+*.tlog
+*.opensdf
+*.sdf
+*.suo
+*.vcxproj.user
+*.pdb
