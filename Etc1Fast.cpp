@@ -16,13 +16,13 @@
 
 
 void Etc1Fast::convertRGBAtoETC1(unsigned char* compressedData, unsigned char* data, int sizeX, int sizeY){
-  if(sizeX < 8 || sizeY < 8){
+  if(sizeX < 4 || sizeY < 4){
     cout << "Etc1Fast::convertRGBAtoETC1: Invalid image size: " << sizeX << " x " << sizeY << endl;
     return;
   }
 
-  if((sizeX % 8 != 0) || ((sizeY % 8) != 0)){
-    cout << "Etc1Fast::convertRGBAtoETC1: Invalid image size. Needs to be dividable by 8: " << sizeX << " x " << sizeY << endl;
+  if((sizeX % 4 != 0) || ((sizeY % 4) != 0)){
+    cout << "Etc1Fast::convertRGBAtoETC1: Invalid image size. Needs to be dividable by 4: " << sizeX << " x " << sizeY << endl;
     return;
   }
 
