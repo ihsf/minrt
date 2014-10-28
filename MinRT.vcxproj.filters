@@ -65,6 +65,9 @@
       <Filter>models</Filter>
     </ClInclude>
     <ClInclude Include="TaskDispatch.hpp" />
+    <ClInclude Include="Dither.hpp">
+      <Filter>etc1</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -118,6 +121,9 @@
       <Filter>raytracer</Filter>
     </ClCompile>
     <ClCompile Include="TaskDispatch.cpp" />
+    <ClCompile Include="Dither.cpp">
+      <Filter>etc1</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">
