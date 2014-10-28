@@ -73,7 +73,7 @@ void RT_RayTracer::renderFrame(){
 void RT_RayTracer::renderFrameETC()
 {
   auto fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
-  auto fb2 = blockFB->getFrameBuffer();
+  auto fb2 = (uint32_t*)blockFB->getFrameBuffer();
   const auto w = frameBuffer->getSizeX();
 
   look();
@@ -84,7 +84,7 @@ void RT_RayTracer::renderFrameETC()
     TaskDispatch::Queue( [this, i, fb1, fb2, w]{
       taskManager.tasks[i]->run();
       auto src = fb1 + w * Engine::RENDERLINE_SIZE * i;
-      auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i * 4;
+      auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i;
       for( int by=0; by<Engine::RENDERLINE_SIZE/4; by++ )
       {
         for( int bx=0; bx<w/4; bx++ )
@@ -93,12 +93,8 @@ void RT_RayTracer::renderFrameETC()
           {
             for( int y=0; y<4; y++ )
             {
-              auto c = *src;
+              *dst++ = *src;
               src += w;
-              *dst++ = ( c & 0x00FF0000 ) >> 16;
-              *dst++ = ( c & 0x0000FF00 ) >> 8;
-              *dst++ =   c & 0x000000FF;
-              *dst++ = 0;
             }
             src -= w * 4 - 1;
           }
@@ -106,11 +102,11 @@ void RT_RayTracer::renderFrameETC()
         src += w * 3;
       }
       auto etc = ((uint64_t*)etcdata) + i * w / 4;
-      dst = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
+      auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
       for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
       {
-        *etc++ = ProcessRGB( dst );
-        dst += 4*4*4;
+        *etc++ = ProcessRGB( etcsrc );
+        etcsrc += 4*4*4;
       }
     } );
   }

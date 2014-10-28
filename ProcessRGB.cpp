@@ -16,9 +16,9 @@ static finline v3i Average( const unsigned char* data )
     unsigned int r = 0, g = 0, b = 0;
     for( int i=0; i<8; i++ )
     {
-        b += *data++;
-        g += *data++;
         r += *data++;
+        g += *data++;
+        b += *data++;
         data++;
     }
     return v3i( r / 8, g / 8, b / 8 );
@@ -44,9 +44,9 @@ static finline void CalcErrorBlock( const unsigned char* data, unsigned int err[
 static finline unsigned int CalcError( const unsigned int block[4], const v3i& average )
 {
     unsigned int err = block[3];
-    err -= block[0] * 2 * average.z;
+    err -= block[0] * 2 * average.x;
     err -= block[1] * 2 * average.y;
-    err -= block[2] * 2 * average.x;
+    err -= block[2] * 2 * average.z;
     err += 8 * ( sq( average.x ) + sq( average.y ) + sq( average.z ) );
     return err;
 }
@@ -118,9 +118,9 @@ static finline unsigned long long CheckSolid( const unsigned char* src )
         ptr += 4;
     }
     return 0x02000000 |
-        ( unsigned int( src[0] & 0xF8 ) << 16 ) |
+        ( unsigned int( src[0] & 0xF8 ) ) |
         ( unsigned int( src[1] & 0xF8 ) << 8 ) |
-        ( unsigned int( src[2] & 0xF8 ) );
+        ( unsigned int( src[2] & 0xF8 ) << 16 );
 }
 
 unsigned long long ProcessRGB( const unsigned char* src )
@@ -166,9 +166,9 @@ unsigned long long ProcessRGB( const unsigned char* src )
         unsigned int bid = id[i];
         unsigned long long* ter = terr[bid%2];
 
-        unsigned char b = *data++;
-        unsigned char g = *data++;
         unsigned char r = *data++;
+        unsigned char g = *data++;
+        unsigned char b = *data++;
         data++;
 
         int dr = a[bid].x - r;
