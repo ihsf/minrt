@@ -6,6 +6,7 @@
   #include <cilk/cilk.h>
 #endif
 #include "ProcessRGB.hpp"
+#include "Dither.hpp"
 
 RT_RayTracer::RT_RayTracer( Camera* gameCamera_){
   Assert(gameCamera_, "RT_RayTracer: gameCamera");
@@ -105,6 +106,9 @@ void RT_RayTracer::renderFrameETC()
       auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
       for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
       {
+#if 1
+        Dither( etcsrc );
+#endif
         *etc++ = ProcessRGB( etcsrc );
         etcsrc += 4*4*4;
       }

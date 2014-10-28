@@ -1,9 +1,11 @@
 #include "TaskDispatch.hpp"
 #include "MinRT.h"
+#include "Dither.hpp"
 
 TaskDispatch dispatch( 8 );
 
 int main(int argc, char *argv[]){
+  InitDither();
   Engine::init(argc, argv);
 	Camera camera;
 
