@@ -46,6 +46,7 @@ class RT_RayTracer {
 		void runTasksOpenMP();
 		void runTasksCilk();
 		void runTasksOpenMPT();
+    void runTasksTaskDispatcher();
 
     RT_Camera* internalCamera;
     RT_FrameBuffer* frameBuffer;

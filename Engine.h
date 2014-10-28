@@ -142,7 +142,8 @@ class Engine {
     typedef enum{
       OPENMP = 1,
       OPENMPT = 2,
-      CILK = 3
+      CILK = 3,
+      TASKDISPATCH = 4
     } enum_MultiThreadMethods;
 
     static void calculateFrameRate();

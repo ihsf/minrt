@@ -1,3 +1,4 @@
+#include "TaskDispatch.hpp"
 #include "RT_RayTracer.h"
 #ifdef __INTEL_COMPILER
   #include <cilk/cilk.h>
@@ -117,6 +118,10 @@ void RT_RayTracer::renderScene(){
 			runTasksCilk();
 			break;
 
+    case Engine::TASKDISPATCH:
+      runTasksTaskDispatcher();
+      break;
+
 		default:
 			cout << "RT_RayTracer::renderScene: Invalid method to multi-thread" << endl;
 			break;
@@ -152,3 +157,11 @@ void RT_RayTracer::runTasksCilk(){
   }
 }
 
+void RT_RayTracer::runTasksTaskDispatcher()
+{
+  for( int i=0; i<(int)taskManager.tasks.size(); i++ )
+  {
+    TaskDispatch::Queue( [this, i]{ taskManager.tasks[i]->run(); } );
+  }
+  TaskDispatch::Sync();
+}

@@ -29,7 +29,7 @@ IPaddress* Engine::remoteIP = NULL;
 
 int Engine::serverPort = 2000;
 
-int Engine::methodToMultiThread = Engine::OPENMP;  // might be overwritten in Engine::init
+int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
 bool Engine::dedicated = true; // false;
 

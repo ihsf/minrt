@@ -1,4 +1,7 @@
+#include "TaskDispatch.hpp"
 #include "MinRT.h"
+
+TaskDispatch dispatch( 8 );
 
 int main(int argc, char *argv[]){
   Engine::init(argc, argv);
