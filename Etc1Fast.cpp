@@ -1,4 +1,5 @@
 #include "Etc1Fast.h"
+#include "TaskDispatch.hpp"
 
 //#include <omp.h> 
 #ifdef __INTEL_COMPILER
@@ -38,10 +39,10 @@ void Etc1Fast::convertRGBAtoETC1(unsigned char* compressedData, unsigned char* d
 #ifdef __INTEL_COMPILER
       cilk_spawn(etc1helperFunction(compressedDataPointer, inBuf, sizeX, j));
 #else
-      cout << "convertRGBAtoETC1: No cilk found. Using single thread" << endl;
-      etc1helperFunction(compressedDataPointer, inBuf, sizeX, j);
+      TaskDispatch::Queue( [compressedDataPointer, inBuf, sizeX, j]{ etc1helperFunction(compressedDataPointer, inBuf, sizeX, j); } );
 #endif
     }
+    TaskDispatch::Sync();
 }
 
 
