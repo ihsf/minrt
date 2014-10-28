@@ -206,6 +206,7 @@
     <ClInclude Include="SDLstuff.h" />
     <ClInclude Include="StanfordBunny.h" />
     <ClInclude Include="TablesETC1.hpp" />
+    <ClInclude Include="TaskDispatch.hpp" />
     <ClInclude Include="VectorETC1.hpp" />
     <ClInclude Include="WindowsHelper.h" />
   </ItemGroup>
@@ -231,6 +232,7 @@
     <ClCompile Include="RT_TaskRenderTile.cpp" />
     <ClCompile Include="SDLstuff.cpp" />
     <ClCompile Include="TablesETC1.cpp" />
+    <ClCompile Include="TaskDispatch.cpp" />
     <ClCompile Include="WindowsHelper.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

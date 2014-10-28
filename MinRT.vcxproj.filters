@@ -64,6 +64,7 @@
     <ClInclude Include="StanfordBunny.h">
       <Filter>models</Filter>
     </ClInclude>
+    <ClInclude Include="TaskDispatch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -116,6 +117,7 @@
     <ClCompile Include="RT_ShadingInfo.cpp">
       <Filter>raytracer</Filter>
     </ClCompile>
+    <ClCompile Include="TaskDispatch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">
