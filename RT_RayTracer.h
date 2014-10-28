@@ -26,8 +26,10 @@ class RT_RayTracer {
 
     void look();
     void renderFrame();
+    void renderFrameETC();
 
     unsigned char* getFrameBuffer();
+    const unsigned char* getDataETC() const { return etcdata; }
     Camera* getGameCamera(){ return gameCamera;}  
 
     void clearFrameBuffers();
@@ -49,7 +51,8 @@ class RT_RayTracer {
     void runTasksTaskDispatcher();
 
     RT_Camera* internalCamera;
-    RT_FrameBuffer* frameBuffer;
+    RT_FrameBuffer* frameBuffer, *blockFB;
+    unsigned char* etcdata;
 };
 
 #endif

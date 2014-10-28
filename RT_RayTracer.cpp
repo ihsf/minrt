@@ -1,20 +1,27 @@
+#include <stdint.h>
+
 #include "TaskDispatch.hpp"
 #include "RT_RayTracer.h"
 #ifdef __INTEL_COMPILER
   #include <cilk/cilk.h>
 #endif
+#include "ProcessRGB.hpp"
 
 RT_RayTracer::RT_RayTracer( Camera* gameCamera_){
   Assert(gameCamera_, "RT_RayTracer: gameCamera");
   this->gameCamera = gameCamera_;
 
   frameBuffer = NULL;
+  blockFB = NULL;
 	internalCamera = NULL;
+  etcdata = NULL;
 }
 
 RT_RayTracer::~RT_RayTracer(){
   delete frameBuffer;
+  delete blockFB;
 	delete internalCamera;
+  delete[] etcdata;
 }
 
 void RT_RayTracer::initCamera(){
@@ -33,6 +40,8 @@ void RT_RayTracer::initCamera(){
 
 void RT_RayTracer::init(){
   frameBuffer = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
+  blockFB = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
+  etcdata = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT / 2];
 
   clearFrameBuffers();
 	initCamera();
@@ -59,6 +68,53 @@ void RT_RayTracer::renderFrame(){
   if(!Engine::server)  {
 	  Engine::numFramesRendered++;
   }
+}
+
+void RT_RayTracer::renderFrameETC()
+{
+  auto fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
+  auto fb2 = blockFB->getFrameBuffer();
+  const auto w = frameBuffer->getSizeX();
+
+  look();
+  taskManager.deleteAllTasks();
+  createRenderingTasks();
+  for( int i=0; i<(int)taskManager.tasks.size(); i++ )
+  {
+    TaskDispatch::Queue( [this, i, fb1, fb2, w]{
+      taskManager.tasks[i]->run();
+      auto src = fb1 + w * Engine::RENDERLINE_SIZE * i;
+      auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i * 4;
+      for( int by=0; by<Engine::RENDERLINE_SIZE/4; by++ )
+      {
+        for( int bx=0; bx<w/4; bx++ )
+        {
+          for( int x=0; x<4; x++ )
+          {
+            for( int y=0; y<4; y++ )
+            {
+              auto c = *src;
+              src += w;
+              *dst++ = ( c & 0x00FF0000 ) >> 16;
+              *dst++ = ( c & 0x0000FF00 ) >> 8;
+              *dst++ =   c & 0x000000FF;
+              *dst++ = 0;
+            }
+            src -= w * 4 - 1;
+          }
+        }
+        src += w * 3;
+      }
+      auto etc = ((uint64_t*)etcdata) + i * w / 4;
+      dst = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
+      for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
+      {
+        *etc++ = ProcessRGB( dst );
+        dst += 4*4*4;
+      }
+    } );
+  }
+  TaskDispatch::Sync();
 }
 
 void RT_RayTracer::look(){

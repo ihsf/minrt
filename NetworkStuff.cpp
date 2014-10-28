@@ -156,12 +156,13 @@ void NetworkStuff::copyRect(unsigned char* copiedBuffer, unsigned char* frameBuf
 void NetworkStuff::sendMessageToGameClient(){
   //WindowsHelper::getMsElapsed();
 
-  rayTracer->renderFrame();
+  rayTracer->renderFrameETC();
 
   //float timeForRendering = WindowsHelper::getMsElapsed();  
 
   //WindowsHelper::getMsElapsed();
 
+#if 0
   if(!Engine::rectMode){
     memcpy(frameBufferCopy, rayTracer->getFrameBuffer(), Engine::screenWidthRT * Engine::screenHeightRT * 4);
     Etc1Fast::convertRGBAtoETC1(outputBuffer, frameBufferCopy, Engine::screenWidthRT, Engine::screenHeightRT);
@@ -169,10 +170,11 @@ void NetworkStuff::sendMessageToGameClient(){
     copyRect(frameBufferCopy, rayTracer->getFrameBuffer());
     Etc1Fast::convertRGBAtoETC1(outputBuffer, frameBufferCopy, Engine::rectSizeX, Engine::rectSizeY);
   }  
+#endif
 
   //float etc1EncodeTime = WindowsHelper::getMsElapsed();
 
-  int fbBytesSent = SDLNet_TCP_Send(Engine::csd, outputBuffer, numBytesToSend);
+  int fbBytesSent = SDLNet_TCP_Send(Engine::csd, rayTracer->getDataETC(), numBytesToSend);
 }
 
 
