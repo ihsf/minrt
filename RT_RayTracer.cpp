@@ -106,7 +106,7 @@ void RT_RayTracer::renderFrameETC()
       auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
       for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
       {
-#if 1
+#if 0
         Dither( etcsrc );
 #endif
         *etc++ = ProcessRGB( etcsrc );
