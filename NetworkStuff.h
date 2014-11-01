@@ -50,6 +50,7 @@ class NetworkStuff {
 		
 		unsigned char* outputBuffer;
 		unsigned char* frameBufferCopy;
+    char* lz4Buf;
 
 		int numBytesToSend;
 

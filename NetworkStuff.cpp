@@ -1,3 +1,5 @@
+#include "lz4-r123/lz4.h"
+
 #include "NetworkStuff.h"
 
 NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTracer* rayTracer_){
@@ -14,11 +16,13 @@ NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTra
   // FIXME. Try without the HACK. HACK *2
 	outputBuffer = new unsigned char[numBytesToSend * 2];
 	frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
+  lz4Buf = new char[LZ4_compressBound( numBytesToSend )];
 }
 
 NetworkStuff::~NetworkStuff(){
   delete[] outputBuffer;
   delete[] frameBufferCopy;
+  delete[] lz4Buf;
 }
 
 void NetworkStuff::init() {
@@ -176,7 +180,11 @@ void NetworkStuff::sendMessageToGameClient(){
 
   //float etc1EncodeTime = WindowsHelper::getMsElapsed();
 
-  int fbBytesSent = SDLNet_TCP_Send(Engine::csd, rayTracer->getDataETC(), numBytesToSend);
+  auto src = rayTracer->getDataETC();
+  int size = LZ4_compress( (char*)src, lz4Buf, numBytesToSend );
+
+  SDLNet_TCP_Send(Engine::csd, &size, 4 );
+  SDLNet_TCP_Send(Engine::csd, lz4Buf, size);
 }
 
 
