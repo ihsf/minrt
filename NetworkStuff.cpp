@@ -17,6 +17,8 @@ NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTra
 }
 
 NetworkStuff::~NetworkStuff(){
+  delete[] outputBuffer;
+  delete[] frameBufferCopy;
 }
 
 void NetworkStuff::init() {
