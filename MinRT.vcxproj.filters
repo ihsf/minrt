@@ -68,6 +68,9 @@
     <ClInclude Include="Dither.hpp">
       <Filter>etc1</Filter>
     </ClInclude>
+    <ClInclude Include="lz4-r123\lz4.h">
+      <Filter>lz4</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -124,6 +127,9 @@
     <ClCompile Include="Dither.cpp">
       <Filter>etc1</Filter>
     </ClCompile>
+    <ClCompile Include="lz4-r123\lz4.c">
+      <Filter>lz4</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">
@@ -137,6 +143,9 @@
     </Filter>
     <Filter Include="models">
       <UniqueIdentifier>{a223f51d-3af9-4ff4-9714-b9fc95a821c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lz4">
+      <UniqueIdentifier>{bca1752e-009c-4da9-b076-7d77541366bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
