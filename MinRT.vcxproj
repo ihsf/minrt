@@ -237,6 +237,7 @@
     <ClCompile Include="RT_TaskManager.cpp" />
     <ClCompile Include="RT_TaskRenderTile.cpp" />
     <ClCompile Include="SDLstuff.cpp" />
+    <ClCompile Include="StanfordBunny.cpp" />
     <ClCompile Include="TablesETC1.cpp" />
     <ClCompile Include="TaskDispatch.cpp" />
     <ClCompile Include="WindowsHelper.cpp" />

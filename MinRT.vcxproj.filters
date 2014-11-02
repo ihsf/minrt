@@ -130,6 +130,9 @@
     <ClCompile Include="lz4-r123\lz4.c">
       <Filter>lz4</Filter>
     </ClCompile>
+    <ClCompile Include="StanfordBunny.cpp">
+      <Filter>models</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">
