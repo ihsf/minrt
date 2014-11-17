@@ -71,6 +71,7 @@
     <ClInclude Include="lz4-r123\lz4.h">
       <Filter>lz4</Filter>
     </ClInclude>
+    <ClInclude Include="System.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -133,6 +134,7 @@
     <ClCompile Include="StanfordBunny.cpp">
       <Filter>models</Filter>
     </ClCompile>
+    <ClCompile Include="System.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">

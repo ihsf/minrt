@@ -1,8 +1,9 @@
 #include "TaskDispatch.hpp"
 #include "MinRT.h"
 #include "Dither.hpp"
+#include "System.hpp"
 
-TaskDispatch dispatch( 8 );
+TaskDispatch dispatch( System::CPUCores() );
 
 int main(int argc, char *argv[]){
   InitDither();

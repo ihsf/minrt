@@ -209,6 +209,7 @@
     <ClInclude Include="RT_TaskRenderTile.h" />
     <ClInclude Include="SDLstuff.h" />
     <ClInclude Include="StanfordBunny.h" />
+    <ClInclude Include="System.hpp" />
     <ClInclude Include="TablesETC1.hpp" />
     <ClInclude Include="TaskDispatch.hpp" />
     <ClInclude Include="VectorETC1.hpp" />
@@ -238,6 +239,7 @@
     <ClCompile Include="RT_TaskRenderTile.cpp" />
     <ClCompile Include="SDLstuff.cpp" />
     <ClCompile Include="StanfordBunny.cpp" />
+    <ClCompile Include="System.cpp" />
     <ClCompile Include="TablesETC1.cpp" />
     <ClCompile Include="TaskDispatch.cpp" />
     <ClCompile Include="WindowsHelper.cpp" />
