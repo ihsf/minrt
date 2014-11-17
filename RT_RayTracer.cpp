@@ -80,39 +80,48 @@ void RT_RayTracer::renderFrameETC()
   look();
   taskManager.deleteAllTasks();
   createRenderingTasks();
-  for( int i=0; i<(int)taskManager.tasks.size(); i++ )
-  {
-    TaskDispatch::Queue( [this, i, fb1, fb2, w]{
-      taskManager.tasks[i]->run();
-      auto src = fb1 + w * Engine::RENDERLINE_SIZE * i;
-      auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i;
-      for( int by=0; by<Engine::RENDERLINE_SIZE/4; by++ )
-      {
-        for( int bx=0; bx<w/4; bx++ )
+
+  if (Engine::server){
+    for( int i=0; i<(int)taskManager.tasks.size(); i++ ){
+      TaskDispatch::Queue( [this, i, fb1, fb2, w]{
+        taskManager.tasks[i]->run();
+
+        auto src = fb1 + w * Engine::RENDERLINE_SIZE * i;
+        auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i;
+        for( int by=0; by<Engine::RENDERLINE_SIZE/4; by++ )
         {
-          for( int x=0; x<4; x++ )
+          for( int bx=0; bx<w/4; bx++ )
           {
-            for( int y=0; y<4; y++ )
+            for( int x=0; x<4; x++ )
             {
-              *dst++ = *src;
-              src += w;
+              for( int y=0; y<4; y++ )
+              {
+                *dst++ = *src;
+                src += w;
+              }
+              src -= w * 4 - 1;
             }
-            src -= w * 4 - 1;
           }
+          src += w * 3;
         }
-        src += w * 3;
-      }
-      auto etc = ((uint64_t*)etcdata) + i * w / 4;
-      auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
-      for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
-      {
-#if 0
-        Dither( etcsrc );
-#endif
-        *etc++ = ProcessRGB( etcsrc );
-        etcsrc += 4*4*4;
-      }
-    } );
+        auto etc = ((uint64_t*)etcdata) + i * w / 4;
+        auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
+        for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
+        {
+  #if 0
+          Dither( etcsrc );
+  #endif
+          *etc++ = ProcessRGB( etcsrc );
+          etcsrc += 4*4*4;
+        }
+      } );
+    }
+  } else {
+    for (int i = 0; i<(int)taskManager.tasks.size(); i++){
+      TaskDispatch::Queue([this, i]{
+        taskManager.tasks[i]->run();
+      });
+    }
   }
   TaskDispatch::Sync();
 }
