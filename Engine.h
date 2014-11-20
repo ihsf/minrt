@@ -148,6 +148,8 @@ class Engine {
 
     static void calculateFrameRate();
 
+    static bool isPointInsideRect(int x, int y);
+
 	private:		
     static float lastTime;				// This will hold the time from the last frame	
     static void parseArgv(int argc, char *argv[]);

@@ -152,6 +152,12 @@ void RT_RayTracer::createRenderingTasks(){
     startPixel.x = 0;
     startPixel.y = i * Engine::RENDERLINE_SIZE;
 
+    if(Engine::rectMode){
+      if(!Engine::isPointInsideRect(startPixel.x, startPixel.y)){
+        continue;
+      }
+    }
+
     RT_TaskRenderTile* taskRenderTile = new RT_TaskRenderTile(&startPixel, internalCamera, frameBuffer, i);
     taskManager.addTaskRenderTile(taskRenderTile);
 

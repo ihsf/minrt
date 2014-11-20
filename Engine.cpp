@@ -1,9 +1,9 @@
 #include "Engine.h"
 
-int Engine::screenWidthRT = 1280;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenHeightRT =  720;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenWidthGL = 1280;
-int Engine::screenHeightGL = 720;
+int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
+int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
+int Engine::screenWidthGL = 1920;
+int Engine::screenHeightGL = 1080;
 
 int Engine::RENDERLINE_SIZE = 4;
 
@@ -20,7 +20,7 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
-bool Engine::server = true; // false;
+bool Engine::server = true; //   false;    //
 
 TCPsocket Engine::sd = NULL;
 TCPsocket Engine::csd = NULL;
@@ -31,7 +31,7 @@ int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::dedicated = true; // false;
+bool Engine::dedicated = true; //   false; //true;  //
 
 float Engine::framesPerSecond = 1.0f;
 
@@ -64,7 +64,7 @@ void Engine::init(int argc, char *argv[]){
   parseArgv(argc, argv);
 
 #ifdef __INTEL_COMPILER
-  methodToMultiThread = Engine::CILK;
+  //methodToMultiThread = Engine::CILK;
 #endif
 }
 
@@ -101,7 +101,18 @@ void Engine::parseArgv(int argc, char *argv[]){
       serverPort = atoi(argv[i + 1]);
       cout << "Overwriting port to: " << serverPort << endl;
     }
-
   }
 }
 
+bool Engine::isPointInsideRect(int x, int y){
+  if (x < rectLeft)
+    return false;
+  if (x > rectRight)
+    return false;
+  if (y < rectBottom)
+    return false;
+  if (y > rectTop)
+    return false;
+
+  return true;
+}

@@ -1,1 +1,1 @@
-Release64\MinRT
+Release64\MinRT %1 %2 
