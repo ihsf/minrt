@@ -137,6 +137,17 @@ void RT_RayTracer::look(){
   internalCamera->computeCameraCoordinateSystem();
 }
 
+// ToDo:
+// this has to be changed to support rect mode
+// in rect mode we render e.g.
+//    * rect0    X (0 - 959)   Y (0 - 1079)
+//    * rect1    X (960 - 1919)   Y (0 - 1079)
+//
+//
+// right now because of the RENDERLINE_SIZE this will not work
+//
+// also might need to change allocation of "etcdata" to be rect size
+// and to make sure that only the LZ4 compressed rect will be sent, not the whole frame buffer
 void RT_RayTracer::createRenderingTasks(){
   CVector2i startPixel;
 
