@@ -5,6 +5,7 @@
 
 enum CompressionAlgorithm
 {
+  CA_NONE,
   CA_LZ4,
   CA_LZ4HC
 };
@@ -194,6 +195,10 @@ void NetworkStuff::sendMessageToGameClient(){
   int size;
   switch( compalg )
   {
+  case CA_NONE:
+    size = -numBytesToSend;
+    lz4Buf = (char*)src;
+    break;
   case CA_LZ4:
     size = LZ4_compress( (char*)src, lz4Buf, numBytesToSend );
     break;
@@ -204,7 +209,7 @@ void NetworkStuff::sendMessageToGameClient(){
 
 
   SDLNet_TCP_Send(Engine::csd, &size, 4 );
-  SDLNet_TCP_Send(Engine::csd, lz4Buf, size);
+  SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
 }
 
 
