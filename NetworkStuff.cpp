@@ -1,6 +1,16 @@
 #include "lz4-r123/lz4.h"
+#include "lz4-r123/lz4hc.h"
 
 #include "NetworkStuff.h"
+
+enum CompressionAlgorithm
+{
+  CA_LZ4,
+  CA_LZ4HC
+};
+
+CompressionAlgorithm compalg = CA_LZ4;
+
 
 NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTracer* rayTracer_){
 	this->camera = camera_;
@@ -181,7 +191,17 @@ void NetworkStuff::sendMessageToGameClient(){
   //float etc1EncodeTime = WindowsHelper::getMsElapsed();
 
   auto src = rayTracer->getDataETC();
-  int size = LZ4_compress( (char*)src, lz4Buf, numBytesToSend );
+  int size;
+  switch( compalg )
+  {
+  case CA_LZ4:
+    size = LZ4_compress( (char*)src, lz4Buf, numBytesToSend );
+    break;
+  case CA_LZ4HC:
+    size = LZ4_compressHC( (char*)src, lz4Buf, numBytesToSend );
+    break;
+  }
+
 
   SDLNet_TCP_Send(Engine::csd, &size, 4 );
   SDLNet_TCP_Send(Engine::csd, lz4Buf, size);
