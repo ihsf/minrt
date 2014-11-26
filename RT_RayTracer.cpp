@@ -41,8 +41,19 @@ void RT_RayTracer::initCamera(){
 
 void RT_RayTracer::init(){
   frameBuffer = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
-  blockFB = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
-  etcdata = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT / 2];
+
+  if (Engine::rectMode){
+    cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+    cout << "RT_RayTracer::init: rectmode is on." << endl;
+    cout << "RT_RayTracer::init: ToDo: change blockFB to consider rectSizeX/Y." << endl;
+    cout << "RT_RayTracer::init: ToDo: change etcdata to consider rectSizeX/Y." << endl;
+    cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+    blockFB = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
+    etcdata = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT / 2];
+  } else {
+    blockFB = new RT_FrameBuffer(Engine::screenWidthRT, Engine::screenHeightRT);
+    etcdata = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT / 2];
+  }
 
   clearFrameBuffers();
 	initCamera();
@@ -71,42 +82,43 @@ void RT_RayTracer::renderFrame(){
   }
 }
 
-void RT_RayTracer::renderFrameETC()
-{
-  auto fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
-  auto fb2 = (uint32_t*)blockFB->getFrameBuffer();
-  const auto w = frameBuffer->getSizeX();
+void RT_RayTracer::renderFrameETC(){
+  uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
+  uint32_t* fb2 = (uint32_t*)blockFB->getFrameBuffer();
+  const int width = frameBuffer->getSizeX();
 
   look();
   taskManager.deleteAllTasks();
   createRenderingTasks();
 
-  if (Engine::server){
-    for( int i=0; i<(int)taskManager.tasks.size(); i++ ){
-      TaskDispatch::Queue( [this, i, fb1, fb2, w]{
+  if(Engine::server){
+    for(int i=0; i<(int)taskManager.tasks.size(); i++){
+      TaskDispatch::Queue([this, i, fb1, fb2, width]{
+        // render the tile to get RGBA data into the framebuffer
         taskManager.tasks[i]->run();
 
-        auto src = fb1 + w * Engine::RENDERLINE_SIZE * i;
-        auto dst = fb2 + w * Engine::RENDERLINE_SIZE * i;
-        for( int by=0; by<Engine::RENDERLINE_SIZE/4; by++ )
-        {
-          for( int bx=0; bx<w/4; bx++ )
-          {
-            for( int x=0; x<4; x++ )
-            {
-              for( int y=0; y<4; y++ )
-              {
+        auto src = fb1 + width * Engine::RENDERLINE_SIZE * i;
+        auto dst = fb2 + width * Engine::RENDERLINE_SIZE * i;
+
+        // copy from RGBA data from fb1 into the blockwise-oriented fb2
+        for(int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++){
+          for(int blockX = 0; blockX < width / 4; blockX++){
+            for(int x = 0; x < 4; x++){
+              for(int y = 0; y < 4; y++){
                 *dst++ = *src;
-                src += w;
+                src += width;
               }
-              src -= w * 4 - 1;
+              src -= width * 4 - 1;
             }
           }
-          src += w * 3;
+          src += width * 3;
         }
-        auto etc = ((uint64_t*)etcdata) + i * w / 4;
-        auto etcsrc = ((uint8_t*)fb2) + w * Engine::RENDERLINE_SIZE * i * 4;
-        for( int i=0; i < w*Engine::RENDERLINE_SIZE/16; i++ )
+
+        auto etc = ((uint64_t*)etcdata) + i * width / 4;
+        auto etcsrc = ((uint8_t*)fb2) + width * Engine::RENDERLINE_SIZE * i * 4;
+
+        // loop through the blockwise-oriented fb2 and compress RGBA into ETC1 and store this in etc/etcdata.
+        for (int i = 0; i < width*Engine::RENDERLINE_SIZE / 16; i++)
         {
   #if 0
           Dither( etcsrc );
