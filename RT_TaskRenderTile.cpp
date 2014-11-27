@@ -21,7 +21,12 @@ void RT_TaskRenderTile::run(){
 	float sizeYminus1Half = ((float)sizeY - 1.0f) * 0.5f;	
 
 	CVector3 color;
-	CVector2i endPixel(startPixel.x + sizeX, startPixel.y + Engine::RENDERLINE_SIZE);
+  CVector2i endPixel;
+  if(!Engine::rectMode){
+    endPixel = CVector2i(startPixel.x + sizeX, startPixel.y + Engine::RENDERLINE_SIZE);
+  } else {
+    endPixel = CVector2i(startPixel.x + Engine::rectSizeX, startPixel.y + Engine::RENDERLINE_SIZE);
+  }
 
   RT_RayQuery rayQuery[8];
   int xcoord[8];
@@ -86,6 +91,14 @@ void RT_TaskRenderTile::run(){
           color.clamp();
         } else {
           color = CVector3(0.1f, 0.1f, 0.2f); // environment background color
+        }
+
+        if(Engine::serverPort == 2000){
+          color += CVector3(1.0f, 0.0f, 0.0f);
+          color.clamp();
+        } else if(Engine::serverPort == 2001){
+          color += CVector3(0.0f, 0.0f, 1.0f);
+          color.clamp();
         }
 
         putColorInFrameBuffer(xcoord[i], ycoord[i], &color);  
