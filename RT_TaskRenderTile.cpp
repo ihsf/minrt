@@ -92,7 +92,7 @@ void RT_TaskRenderTile::run(){
         } else {
           color = CVector3(0.1f, 0.1f, 0.2f); // environment background color
         }
-
+/*      debug multi-server support
         if(Engine::serverPort == 2000){
           color += CVector3(1.0f, 0.0f, 0.0f);
           color.clamp();
@@ -100,6 +100,7 @@ void RT_TaskRenderTile::run(){
           color += CVector3(0.0f, 0.0f, 1.0f);
           color.clamp();
         }
+*/
 
         putColorInFrameBuffer(xcoord[i], ycoord[i], &color);  
       }
