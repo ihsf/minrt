@@ -15,7 +15,14 @@ EmbreeStuff::~EmbreeStuff(){
 void EmbreeStuff::init(){
   rtcInit(NULL);
  
-  scene = rtcNewScene(RTC_SCENE_STATIC, RTC_INTERSECT8); // Intel AVX: shoot packets of 8 rays
+  if(Engine::embreeIntersect == 4)
+    scene = rtcNewScene(RTC_SCENE_STATIC, RTC_INTERSECT4); // Intel SSE: shoot packets of 4 rays
+  else if(Engine::embreeIntersect == 8)
+    scene = rtcNewScene(RTC_SCENE_STATIC, RTC_INTERSECT8); // Intel AVX: shoot packets of 8 rays
+  else {
+    cout << "Invalid value " << Engine::embreeIntersect << " for Engine::embreeIntersect" << endl;
+    exit(1);
+  }
 }
 
 void EmbreeStuff::addSampleMesh1(){

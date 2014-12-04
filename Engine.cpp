@@ -1,9 +1,16 @@
 #include "Engine.h"
 
+#if 0
+int Engine::screenWidthRT = 2560;  // needs to be divisable by RENDERTILE_SIZE
+int Engine::screenHeightRT = 1440;  // needs to be divisable by RENDERTILE_SIZE
+int Engine::screenWidthGL = 2560;
+int Engine::screenHeightGL = 1440;
+#else
 int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
 int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
 int Engine::screenWidthGL = 1920;
 int Engine::screenHeightGL = 1080;
+#endif
 
 int Engine::RENDERLINE_SIZE = 4;
 
@@ -20,7 +27,7 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
-bool Engine::server = true; //   false;    //
+bool Engine::server = false;    //true; //   
 
 TCPsocket Engine::sd = NULL;
 TCPsocket Engine::csd = NULL;
@@ -31,11 +38,13 @@ int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::dedicated = true; //   false; //true;  //
+bool Engine::dedicated = false; //true;  //true; //   
 
 float Engine::framesPerSecond = 1.0f;
 
 int Engine::numFramesRendered = 0;
+
+int Engine::embreeIntersect = 8;
 
 float Engine::cg_fov = 65.0f;
 

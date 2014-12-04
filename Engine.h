@@ -124,6 +124,8 @@ class Engine {
     static float framesPerSecond;
     static float frameTime;
 
+    static int embreeIntersect;
+
     // Networking stuff
     static TCPsocket sd, csd; /* Socket descriptor, Client socket descriptor */
     static IPaddress ip, *remoteIP;
