@@ -166,7 +166,7 @@ typedef Vector3<unsigned char> v3b;
 
 static inline v3b v3f_to_v3b( const v3f& v )
 {
-    return v3b( unsigned char( std::min( 1.f, v.x ) * 255 ), unsigned char( std::min( 1.f, v.y ) * 255 ), unsigned char( std::min( 1.f, v.z ) * 255 ) );
+    return v3b( (unsigned char)( std::min( 1.f, v.x ) * 255 ), (unsigned char)( std::min( 1.f, v.y ) * 255 ), (unsigned char)( std::min( 1.f, v.z ) * 255 ) );
 }
 
 template<class T>

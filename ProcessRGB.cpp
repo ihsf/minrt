@@ -88,15 +88,15 @@ static finline void EncodeAverages( unsigned long long& _d, const v3i* a, size_t
     {
         for( int i=0; i<3; i++ )
         {
-            d |= unsigned long long( a[base+0][i] >> 4 ) << ( i*8 );
-            d |= unsigned long long( a[base+1][i] >> 4 ) << ( i*8 + 4 );
+            d |= (unsigned long long)( a[base+0][i] >> 4 ) << ( i*8 );
+            d |= (unsigned long long)( a[base+1][i] >> 4 ) << ( i*8 + 4 );
         }
     }
     else
     {
         for( int i=0; i<3; i++ )
         {
-            d |= unsigned long long( a[base+1][i] & 0xF8 ) << ( i*8 );
+            d |= (unsigned long long)( a[base+1][i] & 0xF8 ) << ( i*8 );
             int c = ( ( a[base+0][i] & 0xF8 ) - ( a[base+1][i] & 0xF8 ) ) >> 3;
             c &= ~0xFFFFFFF8;
             d |= ((unsigned long long)c) << ( i*8 );
@@ -118,9 +118,9 @@ static finline unsigned long long CheckSolid( const unsigned char* src )
         ptr += 4;
     }
     return 0x02000000 |
-        ( unsigned int( src[0] & 0xF8 ) ) |
-        ( unsigned int( src[1] & 0xF8 ) << 8 ) |
-        ( unsigned int( src[2] & 0xF8 ) << 16 );
+        ( (unsigned int)( src[0] & 0xF8 ) ) |
+        ( (unsigned int)( src[1] & 0xF8 ) << 8 ) |
+        ( (unsigned int)( src[2] & 0xF8 ) << 16 );
 }
 
 unsigned long long ProcessRGB( const unsigned char* src )
