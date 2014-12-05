@@ -1,13 +1,10 @@
+#include "Engine.h"
 #include "Etc1Fast.h"
 #include "TaskDispatch.hpp"
 
 //#include <omp.h> 
 #ifdef __INTEL_COMPILER
   #include <cilk/cilk.h>
-#endif
-
-#ifndef ALIGN16
-  #define   ALIGN16( x ) __declspec(align(16)) x
 #endif
 
 #ifndef ByteSwap16
@@ -50,7 +47,7 @@ void Etc1Fast::etc1helperFunction(unsigned char* compressedDataPointer, unsigned
   unsigned char*  currentInBuf = inBuf + sizeX * 4 * 4 * (j / 4);
 
   for ( int i = 0; i < sizeX; i += 4) {
-    ALIGN16( unsigned char block[64] );
+    __align(16) unsigned char block[64];
     // copies color values into a block of 4x4 (unsigned char rgba)
 	  ExtractBlock( currentInBuf + i * 4, sizeX, block );
 
