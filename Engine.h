@@ -38,7 +38,7 @@ using namespace std;
 
 #define Assert(a,b) assert( a && b )
 
-#ifdef __WIN32__
+#ifdef _WIN32
   #define _ALIGN(sz) __declspec(align(sz))
   #define __align(...)           __declspec(align(__VA_ARGS__))
 #else

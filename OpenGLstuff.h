@@ -1,8 +1,8 @@
 #ifndef _OPENGLSTUFF_H
 #define _OPENGLSTUFF_H
 
-#if defined(_WIN32) 
-	#include <windows.h>
+#ifdef _WIN32
+  #include <windows.h>
 #endif
 
 #include <GL/gl.h>   
