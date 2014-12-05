@@ -53,7 +53,7 @@ class Etc1Fast {
       unsigned short origHeight;
     };
 
-     finline static void Etc1Fast::pack_etc1_block(unsigned long long* compressedDataPointer, unsigned char* block){
+     finline static void pack_etc1_block(unsigned long long* compressedDataPointer, unsigned char* block){
       *compressedDataPointer = ProcessRGB(block);
     }    
 };
