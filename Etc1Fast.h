@@ -1,9 +1,9 @@
 #ifndef _ETC1FAST_H
 #define _ETC1FAST_H
 
-#include <math.h>			
-#include <stdio.h>	
-#include <malloc.h>
+#include <math.h>
+#include <stdio.h>
+
 #include "WindowsHelper.h"
 #include "ProcessRGB.hpp"
 #include "ForceInline.h"

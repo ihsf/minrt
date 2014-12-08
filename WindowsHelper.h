@@ -5,8 +5,8 @@
 	#pragma warning( disable : 4530 ) // warning C4530: C++ exception handler used, but unwind semantics are not enabled. Specify /EHsc
 #endif
 
+#include <stdlib.h>
 #include <string.h>
-#include <malloc.h>
 #include <iostream>
 #include <vector>
 
