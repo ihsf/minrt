@@ -3,23 +3,26 @@
 #include "NetworkStuff.h"
 
 NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTracer* rayTracer_){
-	this->camera = camera_;
-	this->openglstuff = openglstuff_;
-	this->rayTracer = rayTracer_;
+  this->camera = camera_;
+  this->openglstuff = openglstuff_;
+  this->rayTracer = rayTracer_;
 
-	if(!Engine::server)
-		return; 
+  if (!Engine::server)
+    return;
 
-	init();
-	determineNumBytesToSend();
+  init();
+  determineNumBytesToSend();
 
   // FIXME. Try without the HACK. HACK *2
-	outputBuffer = new unsigned char[numBytesToSend * 2];
-	frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
+  outputBuffer = new unsigned char[numBytesToSend * 2];
+  frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
   lz4Buf = new char[LZ4_compressBound( numBytesToSend )];
 }
 
 NetworkStuff::~NetworkStuff(){
+  if (!Engine::server)
+    return;
+
   delete[] outputBuffer;
   delete[] frameBufferCopy;
   delete[] lz4Buf;
