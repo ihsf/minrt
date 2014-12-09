@@ -94,7 +94,7 @@ void RT_RayTracer::renderFrameETC(){
   createRenderingTasks();
 
   if(Engine::server){
-    for(int i=0; i<(int)taskManager.tasks.size(); i++){
+    for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
       TaskDispatch::Queue([this, i, fb1, fb2, widthFB1, widthFB2]{
         // render the tile to get RGBA data into the framebuffer
         taskManager.tasks[i]->run();
@@ -134,7 +134,7 @@ void RT_RayTracer::renderFrameETC(){
       } );
     }
   } else {
-    for (int i = 0; i<(int)taskManager.tasks.size(); i++){
+    for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
       TaskDispatch::Queue([this, i]{
         taskManager.tasks[i]->run();
       });
@@ -217,7 +217,7 @@ void RT_RayTracer::renderScene(){
 
 void RT_RayTracer::runTasksOpenMP(){
 #pragma omp parallel for
-  for(int i = 0; i < (int)taskManager.tasks.size(); i++){
+  for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
     taskManager.tasks[i]->run();    
   }
@@ -226,7 +226,7 @@ void RT_RayTracer::runTasksOpenMP(){
 void RT_RayTracer::runTasksOpenMPT(){
 #pragma omp parallel
 #pragma omp single
-  for(int i = 0; i < (int)taskManager.tasks.size(); i++){
+  for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
 #ifdef __INTEL_COMPILER
 #pragma omp task    
@@ -236,7 +236,7 @@ void RT_RayTracer::runTasksOpenMPT(){
 }
 
 void RT_RayTracer::runTasksCilk(){
-  for(int i = 0; i < (int)taskManager.tasks.size(); i++){
+  for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
 #ifdef __cilk
     cilk_spawn(taskManager.tasks[i]->run());    
@@ -246,8 +246,7 @@ void RT_RayTracer::runTasksCilk(){
 
 void RT_RayTracer::runTasksTaskDispatcher()
 {
-  for( int i=0; i<(int)taskManager.tasks.size(); i++ )
-  {
+  for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     TaskDispatch::Queue( [this, i]{ taskManager.tasks[i]->run(); } );
   }
   TaskDispatch::Sync();
