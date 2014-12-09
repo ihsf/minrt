@@ -27,6 +27,7 @@ SET (QWRT_SLASHER_SOURCES
 	Engine
 	Etc1Fast
 	lz4-r123/lz4
+	lz4-r123/lz4hc
 	MinRT
 	NetworkStuff
 	OpenGLstuff
