@@ -193,6 +193,7 @@
     <ClInclude Include="Etc1Fast.h" />
     <ClInclude Include="ForceInline.h" />
     <ClInclude Include="lz4-r123\lz4.h" />
+    <ClInclude Include="lz4-r123\lz4hc.h" />
     <ClInclude Include="MathETC1.hpp" />
     <ClInclude Include="NetworkStuff.h" />
     <ClInclude Include="MinRT.h" />
@@ -225,6 +226,7 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Etc1Fast.cpp" />
     <ClCompile Include="lz4-r123\lz4.c" />
+    <ClCompile Include="lz4-r123\lz4hc.c" />
     <ClCompile Include="NetworkStuff.cpp" />
     <ClCompile Include="MinRT.cpp" />
     <ClCompile Include="OpenGLstuff.cpp" />
