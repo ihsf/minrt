@@ -5,6 +5,7 @@
 #define __DARKRL__MATH_HPP__
 
 #include <algorithm>
+#include <cmath>
 
 template<typename T>
 inline T AlignPOT( T val )

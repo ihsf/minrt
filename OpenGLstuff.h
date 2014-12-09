@@ -1,15 +1,17 @@
 #ifndef _OPENGLSTUFF_H
 #define _OPENGLSTUFF_H
 
-#if defined(_WIN32) 
-	#include <windows.h>
-#endif
-
-#include <GL/gl.h>   
-#include "SDL/SDL.h"					// for buffer swapping
 #include "Engine.h"
 #include "WindowsHelper.h"
 #include "RT_RayTracer.h"
+
+#ifdef __APPLE__
+#include <OpenGL/glu.h>
+#else
+#include <GL/glu.h>
+#endif
+
+#include <SDL.h>					// for buffer swapping
 
 class OpenGLstuff{
 	public:

@@ -1,11 +1,12 @@
 #ifndef _SDLSTUFF_H
 #define _SDLSTUFF_H
 
-#include "SDL/SDL.h"
 #include "Engine.h"
 #include "OpenGLstuff.h"
 #include "RT_RayTracer.h"
 #include <iostream>
+
+#include <SDL.h>
 
 using namespace std;
 

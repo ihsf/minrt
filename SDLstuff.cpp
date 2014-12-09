@@ -1,5 +1,5 @@
 #include "SDLstuff.h"
-#include "SDL/SDL_syswm.h"
+#include <SDL_syswm.h>
 
 SDLstuff::SDLstuff(RT_RayTracer* rayTracer_, OpenGLstuff* openglstuff_){
 	this->rayTracer = rayTracer_;

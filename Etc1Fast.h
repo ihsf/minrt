@@ -1,9 +1,9 @@
 #ifndef _ETC1FAST_H
 #define _ETC1FAST_H
 
-#include <math.h>			
-#include <stdio.h>	
-#include <malloc.h>
+#include <math.h>
+#include <stdio.h>
+
 #include "WindowsHelper.h"
 #include "ProcessRGB.hpp"
 #include "ForceInline.h"
@@ -53,7 +53,7 @@ class Etc1Fast {
       unsigned short origHeight;
     };
 
-     finline static void Etc1Fast::pack_etc1_block(unsigned long long* compressedDataPointer, unsigned char* block){
+     finline static void pack_etc1_block(unsigned long long* compressedDataPointer, unsigned char* block){
       *compressedDataPointer = ProcessRGB(block);
     }    
 };

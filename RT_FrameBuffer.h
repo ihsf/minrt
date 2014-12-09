@@ -1,11 +1,11 @@
 #ifndef _RT_FRAMEBUFFER_H
 #define _RT_FRAMEBUFFER_H
 
-#include <math.h>			
-#include <stdio.h>			
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "Engine.h"
-#include <malloc.h>
 
 using namespace std;
 

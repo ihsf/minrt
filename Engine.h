@@ -38,14 +38,13 @@ using namespace std;
 
 #define Assert(a,b) assert( a && b )
 
-#ifdef __WIN32__
+#ifdef _WIN32
   #define _ALIGN(sz) __declspec(align(sz))
+  #define __align(...)           __declspec(align(__VA_ARGS__))
 #else
   #define _ALIGN(...) __attribute__((aligned(__VA_ARGS__)))
+  #define __align(...) __attribute__((aligned(__VA_ARGS__)))
 #endif
-
-#define _ALIGN16 _ALIGN(16)
-#define __align(...)           __declspec(align(__VA_ARGS__))
 
 #ifndef PI_DEFINED
   #define PI_DEFINED

@@ -89,7 +89,7 @@ void OpenGLstuff::swapBuffers(){
 }
 
 void OpenGLstuff::setVSync(int interval){
-#if defined(_WIN32)
+#ifdef _WIN32
 	typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)(int); // Windows specfic to enable vsync turn off 
 	PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
 

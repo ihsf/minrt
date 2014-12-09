@@ -1,15 +1,11 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#if defined(_WIN32)
-  #include <windows.h>
-#endif
-
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "SDL/SDL.h"
+#include <SDL.h>
 #include <iostream>
 #include "Engine.h"
 #include "SDLstuff.h"
