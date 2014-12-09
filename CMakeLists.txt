@@ -48,7 +48,7 @@ SET (QWRT_SLASHER_SOURCES
     )
 
 SET(CILK_FLAGS "-fcilkplus -lcilkrts")
-SET(SSE_FLAGS "-msse -msse2 -msse3 -mssse3")
+SET(SSE_FLAGS "-msse  -msse2 -msse3 -mssse3 -msse4.1 -msse4.2 -msse4 -mavx -mavx2")
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${SSE_FLAGS} ${CILK_FLAGS}")
 
 ADD_EXECUTABLE(minrt ${QWRT_SLASHER_SOURCES})
