@@ -1,10 +1,6 @@
 #ifndef _OPENGLSTUFF_H
 #define _OPENGLSTUFF_H
 
-#ifdef _WIN32
-  #include <windows.h>
-#endif
-
 #include "Engine.h"
 #include "WindowsHelper.h"
 #include "RT_RayTracer.h"
@@ -14,6 +10,7 @@
 #else
 #include <GL/glu.h>
 #endif
+
 #include <SDL.h>					// for buffer swapping
 
 class OpenGLstuff{

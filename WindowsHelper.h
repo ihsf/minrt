@@ -14,17 +14,17 @@
   #include <windows.h>
   #include <winnt.h>
 #else
-	#include <sys/time.h>
+  #include <sys/time.h>
 #endif
 
 using namespace std;
 
 class WindowsHelper {
-	public:
-		WindowsHelper();
-		~WindowsHelper();
+  public:
+    WindowsHelper();
+    ~WindowsHelper();
 
     static float getMsElapsed();
-		static float getTime();
+    static float getTime();
 };
 #endif

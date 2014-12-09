@@ -1,10 +1,6 @@
 #ifndef _MAIN_H
 #define _MAIN_H
 
-#ifdef _WIN32
-  #include <windows.h>
-#endif
-
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
