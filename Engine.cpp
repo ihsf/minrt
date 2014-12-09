@@ -1,15 +1,29 @@
 #include "Engine.h"
 
 #if 0
-int Engine::screenWidthRT = 2560;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenHeightRT = 1440;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenWidthGL = 2560;
-int Engine::screenHeightGL = 1440;
+  int Engine::screenWidthRT = 2560;  // needs to be divisable by RENDERTILE_SIZE
+  int Engine::screenHeightRT = 1440;  // needs to be divisable by RENDERTILE_SIZE
+  int Engine::screenWidthGL = 2560;
+  int Engine::screenHeightGL = 1440;
 #else
-int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
-int Engine::screenWidthGL = 1920;
-int Engine::screenHeightGL = 1080;
+  #if 0
+    int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
+    int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
+    int Engine::screenWidthGL = 1920;
+    int Engine::screenHeightGL = 1080;
+  #else
+    #if 0
+      int Engine::screenWidthRT = 1280;  // needs to be divisable by RENDERTILE_SIZE
+      int Engine::screenHeightRT = 720;  // needs to be divisable by RENDERTILE_SIZE
+      int Engine::screenWidthGL = 1280;
+      int Engine::screenHeightGL = 720;
+    #else
+      int Engine::screenWidthRT = 240;  // needs to be divisable by RENDERTILE_SIZE
+      int Engine::screenHeightRT = 240;  // needs to be divisable by RENDERTILE_SIZE
+      int Engine::screenWidthGL = 240;
+      int Engine::screenHeightGL = 240;
+    #endif
+  #endif
 #endif
 
 int Engine::RENDERLINE_SIZE = 4;
@@ -27,7 +41,7 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
-bool Engine::server = false;    //true; //   
+bool Engine::server = true; //   false;    //
 
 TCPsocket Engine::sd = NULL;
 TCPsocket Engine::csd = NULL;
@@ -38,7 +52,7 @@ int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::dedicated = false; //true;  //true; //   
+bool Engine::dedicated = true; //   false; //true;  //
 
 float Engine::framesPerSecond = 1.0f;
 
