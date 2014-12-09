@@ -18,6 +18,10 @@ NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTra
   this->openglstuff = openglstuff_;
   this->rayTracer = rayTracer_;
 
+  outputBuffer = NULL;
+  frameBufferCopy = NULL;
+  lz4Buf = NULL;
+
   if (!Engine::server)
     return;
 
