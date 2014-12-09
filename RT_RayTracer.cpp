@@ -1,12 +1,13 @@
-#include <stdint.h>
-
-#include "TaskDispatch.hpp"
+#include "Dither.hpp"
+#include "ProcessRGB.hpp"
 #include "RT_RayTracer.h"
+#include "TaskDispatch.hpp"
+
 #ifdef __cilk
   #include <cilk/cilk.h>
 #endif
-#include "ProcessRGB.hpp"
-#include "Dither.hpp"
+
+#include <stdint.h>
 
 RT_RayTracer::RT_RayTracer( Camera* gameCamera_){
   Assert(gameCamera_, "RT_RayTracer: gameCamera");

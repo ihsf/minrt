@@ -7,20 +7,23 @@
   #include <windows.h>
 #endif
 
-#include <SDL.h>
+#include "CVector2.h"
+#include "CVector2i.h"
+#include "CVector3.h"
+#include "ForceInline.h"
+
+#include <assert.h>
 #include <math.h>
+#include <stdlib.h>
 #include <string.h>
+
+#include <fstream>
 #include <iostream>
 #include <string>
-#include <fstream>
-#include "CVector2.h" 
-#include "CVector2i.h"
-#include "CVector3.h" 
 #include <vector>
-#include <stdlib.h>
+
+#include <SDL.h>
 #include <SDL_net.h>
-#include <assert.h>
-#include "ForceInline.h"
 
 using namespace std;
 
