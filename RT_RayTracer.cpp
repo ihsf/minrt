@@ -2,7 +2,7 @@
 
 #include "TaskDispatch.hpp"
 #include "RT_RayTracer.h"
-#ifdef __INTEL_COMPILER
+#ifdef __cilk
   #include <cilk/cilk.h>
 #endif
 #include "ProcessRGB.hpp"
@@ -237,7 +237,7 @@ void RT_RayTracer::runTasksOpenMPT(){
 void RT_RayTracer::runTasksCilk(){
   for(int i = 0; i < (int)taskManager.tasks.size(); i++){
     _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
-#ifdef __INTEL_COMPILER
+#ifdef __cilk
     cilk_spawn(taskManager.tasks[i]->run());    
 #endif
   }
