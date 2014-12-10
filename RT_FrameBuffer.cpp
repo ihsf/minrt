@@ -8,8 +8,8 @@ RT_FrameBuffer::RT_FrameBuffer(int sizeX_, int sizeY_){
 
 	Assert(sizeX > 0 && sizeY > 0, "RT_FrameBuffer");
 
-	const int alignedBy = 64;
-  frameBuffer = (unsigned char*)_mm_malloc((size_t)(sizeX * sizeY * bytesPerPixel), alignedBy);
+  const size_t alignedBy = 64;
+  frameBuffer = (unsigned char*)aligned_alloc(alignedBy, (size_t)(sizeX * sizeY * bytesPerPixel));
   
   memset(frameBuffer, 255, (size_t)(sizeX * sizeY * bytesPerPixel));
 }
@@ -19,7 +19,7 @@ RT_FrameBuffer::~RT_FrameBuffer(){
 }
 
 void RT_FrameBuffer::deleteFrameBuffer(){
-  _mm_free(frameBuffer);
+  free(frameBuffer);
   frameBuffer = NULL;
 }
 
