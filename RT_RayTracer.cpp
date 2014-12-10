@@ -218,7 +218,6 @@ void RT_RayTracer::renderScene(){
 void RT_RayTracer::runTasksOpenMP(){
 #pragma omp parallel for
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-    _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
     taskManager.tasks[i]->run();    
   }
 }
@@ -227,7 +226,6 @@ void RT_RayTracer::runTasksOpenMPT(){
 #pragma omp parallel
 #pragma omp single
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-    _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
 #ifdef __INTEL_COMPILER
 #pragma omp task    
 #endif
@@ -237,7 +235,6 @@ void RT_RayTracer::runTasksOpenMPT(){
 
 void RT_RayTracer::runTasksCilk(){
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-    _mm_setcsr(_mm_getcsr() | /*FTZ:*/ (1<<15) | /*DAZ:*/ (1<<6));
 #ifdef __cilk
     cilk_spawn(taskManager.tasks[i]->run());    
 #endif

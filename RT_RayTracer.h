@@ -13,7 +13,6 @@
 #include <math.h>
 #include <stdio.h>
 #include <vector>
-#include <xmmintrin.h>
 
 using namespace std;
 
