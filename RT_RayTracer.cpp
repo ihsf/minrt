@@ -34,7 +34,7 @@ void RT_RayTracer::initCamera(){
 	internalCamera->setUpVector(0,1,0);
 
   const float tangensValueDEG2R = tanf(DEG2RAD(Engine::cg_fov / 2.0f));
-  const float viewDistance = ((float)Engine::screenHeightRT / 2.0f) / tangensValueDEG2R; 
+  const float viewDistance = ((float)Engine::screenHeightRT / 2.0f) / tangensValueDEG2R;
 	
 	internalCamera->setViewDistance(viewDistance);
   internalCamera->computeCameraCoordinateSystem();
@@ -61,7 +61,7 @@ void RT_RayTracer::clearFrameBuffers(){
     frameBuffer->clear();
 }
 
-unsigned char* RT_RayTracer::getFrameBuffer(){ 
+unsigned char* RT_RayTracer::getFrameBuffer(){
 	Assert(frameBuffer, "getFrameBuffer");
 	unsigned char* returnMe = frameBuffer->getFrameBuffer();
 
@@ -79,13 +79,13 @@ void RT_RayTracer::renderFrame(){
   }
 }
 
-void RT_RayTracer::renderFrameETC(){
+void RT_RayTracer::renderFrameETC() {
   uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
   uint32_t* fb2 = (uint32_t*)blockFB->getFrameBuffer();
 
   const int widthFB1 = frameBuffer->getSizeX(); // width of full frame buffer, e.g. 1280 for 1280x720
-  int widthFB2 = widthFB1; 
-  if(Engine::rectMode){
+  int widthFB2 = widthFB1;
+  if (Engine::rectMode) {
     widthFB2 = Engine::rectSizeX;   // width of rect, e.g. 640 if only one half of the full frame buffer should be rendered
   }
 
@@ -93,54 +93,90 @@ void RT_RayTracer::renderFrameETC(){
   taskManager.deleteAllTasks();
   createRenderingTasks();
 
-  if(Engine::server){
-    for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-      TaskDispatch::Queue([this, i, fb1, fb2, widthFB1, widthFB2]{
-        // render the tile to get RGBA data into the framebuffer
-        taskManager.tasks[i]->run();
+  if (Engine::server) {
+    auto etc1_fun = [&] (size_t i) {
+      // render the tile to get RGBA data into the framebuffer
+      taskManager.tasks[i]->run();
 
-        auto src = fb1 + widthFB1 * Engine::RENDERLINE_SIZE * i;
-        if(Engine::rectMode){
-          src += Engine::rectBottom * widthFB1 + Engine::rectLeft;  // offset the RGBA access until the bottom (lower part) of the rect starts and on the left side
-        }
-        auto dst = fb2 + widthFB2 * Engine::RENDERLINE_SIZE * i;
+      auto src = fb1 + widthFB1 * Engine::RENDERLINE_SIZE * i;
+      if (Engine::rectMode) {
+        src += Engine::rectBottom * widthFB1 + Engine::rectLeft;  // offset the RGBA access until the bottom (lower part) of the rect starts and on the left side
+      }
+      auto dst = fb2 + widthFB2 * Engine::RENDERLINE_SIZE * i;
 
-        // copy RGBA data from fb1 into the blockwise-oriented fb2
-        for(int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++){  // if RENDERLINE_SIZE=4 then this loop will only be executed once
-          for(int blockX = 0; blockX < widthFB2 / 4; blockX++){
-            for(int x = 0; x < 4; x++){
-              for(int y = 0; y < 4; y++){
-                *dst++ = *src;
-                src += widthFB1;
-              }
-              src -= widthFB1 * 4 - 1;
+      // copy RGBA data from fb1 into the blockwise-oriented fb2
+      for (int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++) {  // if RENDERLINE_SIZE=4 then this loop will only be executed once
+        for (int blockX = 0; blockX < widthFB2 / 4; blockX++) {
+          for (int x = 0; x < 4; x++) {
+            for (int y = 0; y < 4; y++) {
+              *dst++ = *src;
+              src += widthFB1;
             }
+            src -= widthFB1 * 4 - 1;
           }
-          src += widthFB1 * 3; // if RENDERLINE_SIZE=4 then this is irrelevant as src will not be used later
         }
+        src += widthFB1 * 3; // if RENDERLINE_SIZE=4 then this is irrelevant as src will not be used later
+      }
 
-        auto etc = ((uint64_t*)etcdata) + i * widthFB2 / 4;
-        auto etcsrc = ((uint8_t*)fb2) + widthFB2 * Engine::RENDERLINE_SIZE * i * 4;
+      auto etc = ((uint64_t*)etcdata) + i * widthFB2 / 4;
+      auto etcsrc = ((uint8_t*)fb2) + widthFB2 * Engine::RENDERLINE_SIZE * i * 4;
 
-        // loop through the blockwise-oriented fb2 and compress RGBA into ETC1 and store this in etc/etcdata.
-        for (int i = 0; i < widthFB2*Engine::RENDERLINE_SIZE / 16; i++)
-        {
-  #if 0
-          Dither( etcsrc );
-  #endif
-          *etc++ = ProcessRGB( etcsrc );
-          etcsrc += 4*4*4;
-        }
-      } );
+      // loop through the blockwise-oriented fb2 and compress RGBA into ETC1 and store this in etc/etcdata.
+      for (size_t i = 0; i < widthFB2*Engine::RENDERLINE_SIZE / 16; ++i) {
+        #if 0
+        Dither( etcsrc );
+        #endif
+        *etc++ = ProcessRGB( etcsrc );
+        etcsrc += 4*4*4;
+      }
+    };
+
+    auto ompf_dispatch = [&] () {
+      size_t e = taskManager.tasks.size();
+      #pragma omp parallel for
+      for (size_t i = 0; i < e; ++i) {
+        etc1_fun(i);
+      }
+    };
+    auto ompt_dispatch = [&] () {
+      #pragma omp parallel
+      #pragma omp single
+      for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
+        #pragma omp task
+        etc1_fun(i);
+      }
+    };
+    auto cilk_dispatch = [&] () {
+      for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
+        #ifdef __cilk
+        cilk_spawn(etc1_fun(i));
+        #else
+        etc1_fun(i);
+        #endif
+      }
+    };
+    auto task_dispatch = [&] () {
+      for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
+        TaskDispatch::Queue([&etc1_fun, i] { etc1_fun(i); });
+      }
+      TaskDispatch::Sync();
+    };
+
+    switch (Engine::methodToMultiThread) {
+      case Engine::OPENMP:       ompf_dispatch(); break;
+      case Engine::OPENMPT:      ompt_dispatch(); break;
+      case Engine::CILK:         cilk_dispatch(); break;
+      default:
+      case Engine::TASKDISPATCH: task_dispatch(); break;
     }
   } else {
     for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-      TaskDispatch::Queue([this, i]{
+      TaskDispatch::Queue([this, i] {
         taskManager.tasks[i]->run();
       });
+      TaskDispatch::Sync();
     }
   }
-  TaskDispatch::Sync();
 }
 
 void RT_RayTracer::look(){
@@ -176,7 +212,7 @@ void RT_RayTracer::createRenderingTasks(){
 
     RT_TaskRenderTile* taskRenderTile = new RT_TaskRenderTile(&startPixel, internalCamera, frameBuffer, i);
     taskManager.addTaskRenderTile(taskRenderTile);
-  }  
+  }
 }
 
 #if 0
@@ -216,28 +252,29 @@ void RT_RayTracer::renderScene(){
 }
 
 void RT_RayTracer::runTasksOpenMP(){
-#pragma omp parallel for
-  for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-    taskManager.tasks[i]->run();    
+  size_t e = taskManager.tasks.size();
+  #pragma omp parallel for
+  for (size_t i = 0; i < e; ++i) {
+    taskManager.tasks[i]->run();
   }
 }
 
 void RT_RayTracer::runTasksOpenMPT(){
-#pragma omp parallel
-#pragma omp single
+  #pragma omp parallel
+  #pragma omp single
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-#ifdef __INTEL_COMPILER
-#pragma omp task    
-#endif
-	taskManager.tasks[i]->run();    
+    #pragma omp task
+    taskManager.tasks[i]->run();
   }
 }
 
 void RT_RayTracer::runTasksCilk(){
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-#ifdef __cilk
-    cilk_spawn(taskManager.tasks[i]->run());    
-#endif
+    #ifdef __cilk
+    cilk_spawn(taskManager.tasks[i]->run());
+    #else
+    taskManager.tasks[i]->run();
+    #endif
   }
 }
 
