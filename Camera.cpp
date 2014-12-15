@@ -52,7 +52,8 @@ void Camera::applyMouseLook(){
 		dotProduct = upVector.dotProduct(&viewMinusPosition);
 	}
 
-	CVector3 axis = axis.cross(viewMinusPosition, upVector);
+	CVector3 axis;
+    axis = axis.cross(viewMinusPosition, upVector);
 	axis.normalize();
 
 #ifdef WIN32
