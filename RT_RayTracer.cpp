@@ -106,6 +106,7 @@ void RT_RayTracer::renderFrameETC() {
 
       // copy RGBA data from fb1 into the blockwise-oriented fb2
       for (int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++) {  // if RENDERLINE_SIZE=4 then this loop will only be executed once
+        #pragma omp simd
         for (int blockX = 0; blockX < widthFB2 / 4; blockX++) {
           for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
