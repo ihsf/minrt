@@ -117,6 +117,9 @@ class Engine {
 
     static bool dedicated;
 
+    static bool debugLatency;
+    static int debugNumCameraChanges;
+
     static int numFramesRendered;
 
     static float cg_fov;

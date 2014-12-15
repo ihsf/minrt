@@ -94,6 +94,16 @@ void RT_TaskRenderTile::run(){
             color = CVector3(0.1f, 0.1f, 0.2f); // environment background color
           }
 
+          if(Engine::debugLatency){
+            if(Engine::debugNumCameraChanges % 2 == 1){
+              color += CVector3(0.0f, 0.6f, 0.0f);
+            } else {
+              color += CVector3(0.6f, 0.0f, 0.0f);
+            }
+
+            color.clamp();
+          }
+
           putColorInFrameBuffer(xcoord[i], ycoord[i], &color);
         }
       }
@@ -154,6 +164,16 @@ void RT_TaskRenderTile::run(){
             color.clamp();
           } else {
             color = CVector3(0.1f, 0.1f, 0.2f); // environment background color
+          }
+
+          if(Engine::debugLatency){
+            if(Engine::debugNumCameraChanges % 2 == 1){
+              color += CVector3(0.0f, 0.6f, 0.0f);
+            } else {
+              color += CVector3(0.6f, 0.0f, 0.0f);
+            }
+
+            color.clamp();
           }
 
           putColorInFrameBuffer(xcoord[i], ycoord[i], &color);

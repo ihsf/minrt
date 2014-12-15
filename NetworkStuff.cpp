@@ -156,6 +156,10 @@ void NetworkStuff::receiveMessageFromGameClient(){
 		return;
 	}
 
+  if((msgBuffer.cameraPosition != camera->getPosition()) || (msgBuffer.cameraView != camera->getView())){
+    Engine::debugNumCameraChanges++;
+  }
+
 	camera->setPosition(msgBuffer.cameraPosition);
 	camera->setView(msgBuffer.cameraView);
   camera->setUpVector(msgBuffer.cameraUp);
