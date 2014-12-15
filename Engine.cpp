@@ -6,7 +6,7 @@
   int Engine::screenWidthGL = 2560;
   int Engine::screenHeightGL = 1440;
 #else
-  #if 0
+  #if 1
     int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
     int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
     int Engine::screenWidthGL = 1920;
@@ -41,7 +41,7 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
-bool Engine::server = true; //   false;    //
+bool Engine::server = false;    // true; //  
 
 TCPsocket Engine::sd = NULL;
 TCPsocket Engine::csd = NULL;
@@ -52,9 +52,9 @@ int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::dedicated = true; //   false; //true;  //
+bool Engine::dedicated = false; //true;  //true; //  
 
-bool Engine::debugLatency = true;
+bool Engine::debugLatency = false;// true;
 int Engine::debugNumCameraChanges = 0;
 
 float Engine::framesPerSecond = 1.0f;
