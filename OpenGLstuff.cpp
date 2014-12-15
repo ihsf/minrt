@@ -52,9 +52,6 @@ void OpenGLstuff::generateFramebufferTexture(){
 }
 
 void OpenGLstuff::render(){
-	if(Engine::server)
-		return;
-
   glEnable(GL_TEXTURE_2D);
 
   glLoadIdentity();
@@ -82,9 +79,6 @@ void OpenGLstuff::render(){
 
 
 void OpenGLstuff::swapBuffers(){
-  if(Engine::server)
-		return;
-	
   SDL_GL_SwapWindow(mainWindow);
 }
 
