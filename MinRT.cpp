@@ -10,22 +10,20 @@ int main(int argc, char *argv[]){
   Engine::init(argc, argv);
 	Camera camera;
 
-  EmbreeStuff::init();  
+  EmbreeStuff::init();
 
   RT_RayTracer rayTracer(&camera);
 
-	OpenGLstuff openglstuff(&rayTracer);	
+  OpenGLstuff openglstuff(&rayTracer);
+  SDLstuff sdlstuff(&rayTracer);
+  NetworkStuff networkStuff(&camera, &rayTracer);
 
-	SDLstuff sdlstuff(&rayTracer, &openglstuff);
-  sdlstuff.init();
-
-  openglstuff.init(sdlstuff.getMainWindow());
-
-	NetworkStuff networkStuff(&camera, &openglstuff, &rayTracer);
-
-	rayTracer.init();
-  
-  camera.setMainWindow(sdlstuff.getMainWindow());
+  if (!Engine::server) {
+    sdlstuff.init();
+    openglstuff.init(sdlstuff.getMainWindow());
+    camera.setMainWindow(sdlstuff.getMainWindow());
+  }
+  rayTracer.init();
 
   sdlstuff.grabKeyAndMouse();
 
@@ -35,17 +33,17 @@ int main(int argc, char *argv[]){
   EmbreeStuff::compile();
 
   // main game loop
-  while(!Engine::done)  {
+  while(!Engine::done) {
 		doGameLoop(&sdlstuff, &camera, &rayTracer, &openglstuff, &networkStuff);
 	}
 
 	// Close the client socket	
 	networkStuff.shutdown();
 
-	// preparing to exit... 
+	// preparing to exit...
   sdlstuff.ungrabKeyAndMouse();
 
-	cout << "MinRT: Leaving now..." << endl;  
+	cout << "MinRT: Leaving now..." << endl;
 
   return 0;
 }
@@ -53,24 +51,23 @@ int main(int argc, char *argv[]){
 
 void doGameLoop(SDLstuff* sdlstuff, Camera* camera, RT_RayTracer* rayTracer, OpenGLstuff* openglstuff, NetworkStuff* networkStuff){
   if(Engine::server) {
-		networkStuff->receiveMessageFromGameClient();
-	} else {
-		sdlstuff->checkEvents();
-	}
+    networkStuff->receiveMessageFromGameClient();
+  } else {
+    sdlstuff->checkEvents();
+  }
 
   Engine::calculateFrameRate();
-	camera->update();	
+  camera->update();
 
-	if(Engine::server) {
-		networkStuff->sendMessageToGameClient();
-	} else {
-    rayTracer->renderFrame(); 
-	}
+  if (Engine::server) {
+    networkStuff->sendMessageToGameClient();
+  } else {
+    rayTracer->renderFrame();
+    openglstuff->render();
+    openglstuff->swapBuffers();
+  }
 
   printAverageFPS();
-
-  openglstuff->render();
-	openglstuff->swapBuffers(); 
 }
 
 void printAverageFPS(){

@@ -2,7 +2,6 @@
 #define _SDLSTUFF_H
 
 #include "Engine.h"
-#include "OpenGLstuff.h"
 #include "RT_RayTracer.h"
 #include <iostream>
 
@@ -12,7 +11,7 @@ using namespace std;
 
 class SDLstuff{
 	public:
-		SDLstuff(RT_RayTracer* rayTracer_, OpenGLstuff* openglstuff_);
+		SDLstuff(RT_RayTracer* rayTracer_);
 		~SDLstuff();
 
 		void init();
@@ -26,7 +25,6 @@ class SDLstuff{
     RT_RayTracer* rayTracer;
 
 	private:
-		OpenGLstuff* openglstuff;
 		SDL_Event event;
     SDL_Window* mainWindow;
     SDL_GLContext sdl_glContext;

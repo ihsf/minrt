@@ -1,9 +1,8 @@
 #include "SDLstuff.h"
 #include <SDL_syswm.h>
 
-SDLstuff::SDLstuff(RT_RayTracer* rayTracer_, OpenGLstuff* openglstuff_){
+SDLstuff::SDLstuff(RT_RayTracer* rayTracer_){
 	this->rayTracer = rayTracer_;
-	this->openglstuff = openglstuff_;
 	
 	mainWindow = NULL;
   sdl_glContext = NULL;
@@ -22,23 +21,14 @@ void SDLstuff::init(){
     }
 	}
 
-  int flagsForWindow = 0;
-  if(Engine::dedicated){
-    flagsForWindow = SDL_SWSURFACE;
-  } else {
-    flagsForWindow = SDL_WINDOW_OPENGL;
-  }
-
-	strcpy(title, "MinRT");
-  sprintf(title, "MinRT %s", MINRT_VERSION);
-
   // move the window starting position a bit away from the upper left corner
   const int totalOffsetX = 6;
   const int totalOffsetY = 28;
 
   if(!Engine::dedicated){
     cout << "Creating SDL window with " << Engine::screenWidthGL << "x" << Engine::screenHeightGL << endl;
-    mainWindow = SDL_CreateWindow(title, totalOffsetX, totalOffsetY, Engine::screenWidthGL, Engine::screenHeightGL, flagsForWindow);
+    sprintf(title, "MinRT %s", MINRT_VERSION);
+    mainWindow = SDL_CreateWindow(title, totalOffsetX, totalOffsetY, Engine::screenWidthGL, Engine::screenHeightGL, SDL_WINDOW_OPENGL);
 
     if (!mainWindow){
       cout << "SDLstuff::createMyWindow. No mainWindow: " << SDL_GetError() << endl;

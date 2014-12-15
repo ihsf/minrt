@@ -4,7 +4,6 @@
 #include "Engine.h"
 #include "SDLstuff.h"
 #include "Camera.h"
-#include "OpenGLstuff.h"
 #include "RT_RayTracer.h"
 #include "Etc1Fast.h"
 
@@ -35,7 +34,7 @@ struct clientMessage{
 
 class NetworkStuff {
 	public:
-		NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff, RT_RayTracer* rayTracer);
+		NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer);
 		~NetworkStuff();
 
 		void shutdown();
@@ -45,7 +44,6 @@ class NetworkStuff {
 
 	private:
 		Camera* camera;
-		OpenGLstuff* openglstuff;
 		RT_RayTracer* rayTracer;
 		
 		unsigned char* outputBuffer;

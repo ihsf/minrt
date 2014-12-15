@@ -13,9 +13,8 @@ enum CompressionAlgorithm
 CompressionAlgorithm compalg = CA_LZ4;
 
 
-NetworkStuff::NetworkStuff(Camera* camera_, OpenGLstuff* openglstuff_, RT_RayTracer* rayTracer_){
+NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   this->camera = camera_;
-  this->openglstuff = openglstuff_;
   this->rayTracer = rayTracer_;
 
   outputBuffer = NULL;
