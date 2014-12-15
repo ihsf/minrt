@@ -89,7 +89,7 @@ void Engine::init(int argc, char *argv[]){
 
   parseArgv(argc, argv);
 
-#ifdef __INTEL_COMPILER
+#ifdef __cilk
   //methodToMultiThread = Engine::CILK;
 #endif
 }

@@ -8,7 +8,7 @@ RT_FrameBuffer::RT_FrameBuffer(int sizeX_, int sizeY_){
 
 	Assert(sizeX > 0 && sizeY > 0, "RT_FrameBuffer");
 
-	const int alignedBy = 64;
+  const size_t alignedBy = 64;
   frameBuffer = (unsigned char*)_mm_malloc((size_t)(sizeX * sizeY * bytesPerPixel), alignedBy);
   
   memset(frameBuffer, 255, (size_t)(sizeX * sizeY * bytesPerPixel));

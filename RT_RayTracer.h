@@ -1,19 +1,18 @@
 #ifndef _RT_RAYTRACER_H
 #define _RT_RAYTRACER_H
 
-#include <math.h>			
-#include <stdio.h>		
-#include <vector>
-#include <xmmintrin.h>
+#include "Camera.h"
+#include "CVector2i.h"
 #include "Engine.h"
+#include "Etc1Fast.h"
 #include "RT_Camera.h"
 #include "RT_FrameBuffer.h"
-#include "Camera.h"
 #include "RT_RayQuery.h"
 #include "RT_TaskManager.h"
-#include "RT_Camera.h"
-#include "Etc1Fast.h"
-#include "CVector2i.h"
+
+#include <math.h>
+#include <stdio.h>
+#include <vector>
 
 using namespace std;
 
