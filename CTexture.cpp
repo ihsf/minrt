@@ -28,6 +28,8 @@ bool CTexture::LoadTGA(const char* const strFileName) {
   if (!strFileName)
     return false;
 
+  init();
+
 	// Open the image and read in binary mode.
 	pfile = fopen(strFileName, "rb");
 

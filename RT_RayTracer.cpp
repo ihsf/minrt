@@ -56,13 +56,23 @@ void RT_RayTracer::init(){
 	initCamera();
 
   // preload frame buffer with static image      ToDo: can be removed for release
-  if(!Engine::compressFileName){
+  if(Engine::compressFileName){
     CTexture image;
 
     image.LoadTGA(Engine::compressFileName);
 
-    // copy data into framebuffer
+    if(image.getSizeX() != Engine::screenWidthRT || image.getSizeY() != Engine::screenHeightRT){
+      cout << Engine::compressFileName << " has wrong resolution for frame buffer" << endl;
+      exit(1);
+    }
 
+    if(image.getChannels() == 3){
+      image.convertFrom24BitTo32Bit();
+    }
+
+    // copy data into framebuffer
+    uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
+    memcpy(fb1, image.data, Engine::screenWidthRT * Engine::screenHeightRT * sizeof(uint32_t));
   }
 }
 
@@ -103,7 +113,7 @@ void RT_RayTracer::renderFrameETC() {
   taskManager.deleteAllTasks();
   createRenderingTasks();
 
-  if (Engine::server) {
+  if (Engine::server || Engine::compressFileName) {
     auto etc1_fun = [&] (size_t i) {
       // render the tile to get RGBA data into the framebuffer
       if(!Engine::compressFileName){   // ToDo: if clause can be removed for release

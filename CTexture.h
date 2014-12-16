@@ -24,8 +24,8 @@ class CTexture{
 			   TGA_RLE = 10   // length encoded
 		} TGAFlags; 	 
 
-		int getSizeX(){ return sizeX; }
-		int getSizeY(){ return sizeY; }
+		short int getSizeX(){ return sizeX; }
+		short int getSizeY(){ return sizeY; }
     int getChannels(){ return channels; }
 
 		void convertFrom24BitTo32Bit();
@@ -38,8 +38,8 @@ class CTexture{
 		void init();
 
 		int channels;           // The channels in the image (3 = RGB : 4 = RGBA)
-		int sizeX;              // The width of the image in pixels
-		int sizeY;              // The height of the image in pixels
+		short int sizeX;              // The width of the image in pixels
+		short int sizeY;              // The height of the image in pixels
 
 		bool imageHasBeenFlipped;
 };

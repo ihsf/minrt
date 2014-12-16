@@ -216,9 +216,10 @@ void NetworkStuff::sendMessageToGameClient(){
     break;
   }
 
-
-  SDLNet_TCP_Send(Engine::csd, &size, 4 );
-  SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
+  if(!Engine::compressFileName){
+    SDLNet_TCP_Send(Engine::csd, &size, 4);
+    SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
+  }
 }
 
 
