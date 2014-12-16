@@ -11,6 +11,9 @@ OpenGLstuff::~OpenGLstuff(){
 void OpenGLstuff::init(SDL_Window* mainWindow_){
   this->mainWindow = mainWindow_;
 
+  if(Engine::dedicated)
+    return;
+
 	// Init OpenGL Camera
 	glViewport(0, 0, Engine::screenWidthGL, Engine::screenHeightGL);
 
@@ -33,6 +36,9 @@ void OpenGLstuff::init(SDL_Window* mainWindow_){
 }
 
 void OpenGLstuff::generateFramebufferTexture(){
+  if(Engine::dedicated)
+    return;
+
 	// Generate texture
 	glGenTextures(1, &framebufferTexID);
 
@@ -52,6 +58,9 @@ void OpenGLstuff::generateFramebufferTexture(){
 }
 
 void OpenGLstuff::render(){
+  if(Engine::dedicated)
+    return;
+
   glEnable(GL_TEXTURE_2D);
 
   glLoadIdentity();
@@ -79,10 +88,16 @@ void OpenGLstuff::render(){
 
 
 void OpenGLstuff::swapBuffers(){
+  if(Engine::dedicated)
+    return;
+
   SDL_GL_SwapWindow(mainWindow);
 }
 
 void OpenGLstuff::setVSync(int interval){
+  if(Engine::dedicated)
+    return;
+
 #ifdef _WIN32
 	typedef BOOL (APIENTRY *PFNWGLSWAPINTERVALFARPROC)(int); // Windows specfic to enable vsync turn off 
 	PFNWGLSWAPINTERVALFARPROC wglSwapIntervalEXT = 0;
