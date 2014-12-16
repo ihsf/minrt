@@ -22,6 +22,7 @@ FIND_PACKAGE(Threads)
 
 SET(MINRT_SOURCES
 	Camera
+	CTexture
 	CVector2
 	CVector2i
 	CVector3

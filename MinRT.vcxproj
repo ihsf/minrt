@@ -195,6 +195,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CTexture.h" />
     <ClInclude Include="CVector2.h" />
     <ClInclude Include="CVector2i.h" />
     <ClInclude Include="CVector3.h" />
@@ -229,6 +230,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CTexture.cpp" />
     <ClCompile Include="CVector2.cpp" />
     <ClCompile Include="CVector2i.cpp" />
     <ClCompile Include="CVector3.cpp" />

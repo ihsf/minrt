@@ -10,6 +10,8 @@
 #include "RT_RayQuery.h"
 #include "RT_TaskManager.h"
 
+#include "CTexture.h" // ToDo: remove before release
+
 #include <math.h>
 #include <stdio.h>
 #include <vector>

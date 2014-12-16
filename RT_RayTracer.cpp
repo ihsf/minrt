@@ -54,6 +54,16 @@ void RT_RayTracer::init(){
 
   clearFrameBuffers();
 	initCamera();
+
+  // preload frame buffer with static image      ToDo: can be removed for release
+  if(!Engine::compressFileName){
+    CTexture image;
+
+    image.LoadTGA(Engine::compressFileName);
+
+    // copy data into framebuffer
+
+  }
 }
 
 void RT_RayTracer::clearFrameBuffers(){
@@ -96,7 +106,9 @@ void RT_RayTracer::renderFrameETC() {
   if (Engine::server) {
     auto etc1_fun = [&] (size_t i) {
       // render the tile to get RGBA data into the framebuffer
-      taskManager.tasks[i]->run();
+      if(!Engine::compressFileName){   // ToDo: if clause can be removed for release
+        taskManager.tasks[i]->run();
+      }
 
       auto src = fb1 + widthFB1 * Engine::RENDERLINE_SIZE * i;
       if (Engine::rectMode) {
