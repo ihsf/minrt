@@ -70,6 +70,8 @@ void RT_RayTracer::init(){
       image.convertFrom24BitTo32Bit();
     }
 
+    image.flipVertically();
+
     // copy data into framebuffer
     uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
     memcpy(fb1, image.data, Engine::screenWidthRT * Engine::screenHeightRT * sizeof(uint32_t));
@@ -192,6 +194,10 @@ void RT_RayTracer::renderFrameETC() {
       default:
       case Engine::TASKDISPATCH: task_dispatch(); break;
     }
+
+    if(Engine::compressFileName){
+      savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
+    }
   } else {
     for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
       TaskDispatch::Queue([this, i] {
@@ -200,6 +206,41 @@ void RT_RayTracer::renderFrameETC() {
       TaskDispatch::Sync();
     }
   }
+}
+
+
+#ifndef ByteSwap16
+  #define ByteSwap16(n) ( ((((unsigned int) n) << 8) & 0xFF00) | ((((unsigned int) n) >> 8) & 0x00FF) )
+#endif
+
+void RT_RayTracer::savePKM(unsigned char* compressedData, int sizeX, int sizeY){
+  if(!Engine::compressFileName)
+    return;
+
+  const int compressedSize = (sizeX * sizeY * 4) / 8;
+
+  ETC1Header header;
+  strcpy(header.tag, "PKM 10");
+  header.format = 0;
+  header.texWidth = ByteSwap16(sizeX);    // big-endian (= non-intel)
+  header.texHeight = ByteSwap16(sizeY);
+  header.origWidth = ByteSwap16(sizeX);
+  header.origHeight = ByteSwap16(sizeY);
+
+  char newFileName[256];
+  strcpy(newFileName, Engine::compressFileName);
+  strcat(newFileName, ".pkm");
+
+  FILE* out = fopen(newFileName, "wb");
+  fwrite(&header, sizeof(ETC1Header), 1, out);
+  size_t writtenBytes = fwrite(compressedData, sizeof(unsigned char), compressedSize, out);
+
+  cout << "savePKM ETC1 compressedSize: " << compressedSize << endl;
+  cout << "Saved " << newFileName << endl;
+  cout << "Use Android tools to convert to png: " << endl;
+  cout << "  etc1tool " << newFileName << " --decode" << endl;
+
+  fclose(out);
 }
 
 void RT_RayTracer::look(){

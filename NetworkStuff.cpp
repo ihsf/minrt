@@ -20,6 +20,14 @@ NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   outputBuffer = NULL;
   frameBufferCopy = NULL;
   lz4Buf = NULL;
+  numBytesToSend = 0;
+
+  if(Engine::compressFileName){
+    determineNumBytesToSend();
+    outputBuffer = new unsigned char[numBytesToSend * 2];
+    frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
+    lz4Buf = new char[LZ4_compressBound(numBytesToSend)];
+  }
 
   if (!Engine::server)
     return;
@@ -201,7 +209,7 @@ void NetworkStuff::sendMessageToGameClient(){
   //float etc1EncodeTime = WindowsHelper::getMsElapsed();
 
   auto src = rayTracer->getDataETC();
-  int size;
+  int size = -1;
   switch( compalg )
   {
   case CA_NONE:
@@ -219,6 +227,28 @@ void NetworkStuff::sendMessageToGameClient(){
   if(!Engine::compressFileName){
     SDLNet_TCP_Send(Engine::csd, &size, 4);
     SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
+  } else {
+    switch(compalg){
+      case CA_NONE:
+        cout << "No compression. Size:    ";
+        break;
+      case CA_LZ4:
+        cout << "LZ4 compression. Size:   ";
+        break;
+      case CA_LZ4HC:
+        cout << "LZ4HC compression. Size: ";
+        break;
+    }
+
+    cout << size << endl;
+
+    const int sizeRGB = Engine::screenWidthRT * Engine::screenHeightRT * 3;
+    cout << sizeRGB <<  " bytes RGB  to " << size << " ETC1 + LZ4. Ratio 1:" << (float)sizeRGB / (float)size << endl;
+
+    const int sizeETC1 = sizeRGB / 3;
+    cout << sizeETC1 << " bytes ETC1 to " << size << "        LZ4. Ratio 1:" << (float)sizeETC1 / (float)size << endl;
+    SDL_Delay(2000);
+    exit(1);    
   }
 }
 

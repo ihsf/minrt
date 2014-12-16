@@ -51,9 +51,21 @@ class RT_RayTracer {
 		void runTasksOpenMPT();
     void runTasksTaskDispatcher();
 
+    void savePKM(unsigned char* compressedData, int sizeX, int sizeY);  // remove later
+
     RT_Camera* internalCamera;
     RT_FrameBuffer* frameBuffer, *blockFB;
     unsigned char* etcdata;
+
+    // remove later
+    struct ETC1Header {
+      char tag[6];                  // "PKM 10"
+      unsigned short format;        // Format == number of mips (== zero)
+      unsigned short texWidth;       // Texture dimensions, multiple of 4 (big-endian)
+      unsigned short texHeight;
+      unsigned short origWidth;      // Original dimensions (big-endian)
+      unsigned short origHeight;
+    };
 };
 
 #endif
