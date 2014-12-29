@@ -243,12 +243,25 @@ void NetworkStuff::sendMessageToGameClient(){
     cout << size << endl;
 
     const int sizeRGB = Engine::screenWidthRT * Engine::screenHeightRT * 3;
+    const int sizeETC1 = sizeRGB / 6;
+
+    cout << sizeETC1 << " bytes ETC1 to " << size << "        LZ4. Ratio 1:" << (float)sizeETC1 / (float)size << endl;
     cout << sizeRGB <<  " bytes RGB  to " << size << " ETC1 + LZ4. Ratio 1:" << (float)sizeRGB / (float)size << endl;
 
-    const int sizeETC1 = sizeRGB / 3;
-    cout << sizeETC1 << " bytes ETC1 to " << size << "        LZ4. Ratio 1:" << (float)sizeETC1 / (float)size << endl;
-    SDL_Delay(2000);
-    exit(1);    
+    // create empty file with the info from above in the filename
+    char newFileName[256];
+    sprintf(newFileName, "%s.txt.RGBsize_%i___ETCsize_%i___LZ4size_%i___ratioRGBtoETC1andLZ4_%i___ratioRGBtoLZ4_%i",
+      Engine::compressFileName, sizeRGB, sizeETC1, size, (float)sizeRGB / (float)size, (float)sizeETC1 / (float)size);
+
+    FILE* out = fopen(newFileName, "wb");
+    fclose(out);
+
+    
+    if(Engine::numFramesRendered > 3){
+      Engine::numFramesRendered++;
+      SDL_Delay(2000);
+      exit(1);
+    }
   }
 }
 
