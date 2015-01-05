@@ -250,15 +250,16 @@ void NetworkStuff::sendMessageToGameClient(){
 
     // create empty file with the info from above in the filename
     char newFileName[256];
-    sprintf(newFileName, "%s.txt.RGBsize_%i___ETCsize_%i___LZ4size_%i___ratioRGBtoETC1andLZ4_%i___ratioRGBtoLZ4_%i",
+    sprintf(newFileName, "%s.txt.RGBsize_%i___ETCsize_%i___LZ4size_%i___ratioRGBtoETC1andLZ4_%f___ratioRGBtoLZ4_%f",
       Engine::compressFileName, sizeRGB, sizeETC1, size, (float)sizeRGB / (float)size, (float)sizeETC1 / (float)size);
 
     FILE* out = fopen(newFileName, "wb");
     fclose(out);
 
     
-    if(Engine::numFramesRendered > 3){
-      Engine::numFramesRendered++;
+    Engine::numFramesRendered++;
+
+    if(Engine::numFramesRendered > 1){      
       SDL_Delay(2000);
       exit(1);
     }
