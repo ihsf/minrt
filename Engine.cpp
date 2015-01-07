@@ -41,6 +41,10 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
+int Engine::numAccelerometerHits = 0;
+int Engine::previousNumAccelerometerHits = 0;
+bool Engine::accelerometerChangedThisFrame = false;
+
 #if 1
 bool Engine::server = true;
 bool Engine::dedicated = true;
@@ -58,7 +62,7 @@ int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::debugLatency = false;// true;
+bool Engine::debugLatency = false;// true;  //
 int Engine::debugNumCameraChanges = 0;
 
 float Engine::framesPerSecond = 1.0f;

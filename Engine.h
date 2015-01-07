@@ -146,6 +146,10 @@ class Engine {
     static int rectSizeX;
     static int rectSizeY;
 
+    static int previousNumAccelerometerHits;
+    static int numAccelerometerHits;
+    static bool accelerometerChangedThisFrame;
+
     typedef enum{
       OPENMP = 1,
       OPENMPT = 2,

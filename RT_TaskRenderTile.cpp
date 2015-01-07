@@ -101,6 +101,10 @@ void RT_TaskRenderTile::run(){
               color += CVector3(0.6f, 0.0f, 0.0f);
             }
 
+            if (Engine::accelerometerChangedThisFrame){
+              color += CVector3(0.0f, 0.0f, 0.6f);
+            }
+
             color.clamp();
           }
 

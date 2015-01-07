@@ -10,7 +10,7 @@ enum CompressionAlgorithm
   CA_LZ4HC
 };
 
-CompressionAlgorithm compalg = CA_NONE;// CA_LZ4;
+CompressionAlgorithm compalg = CA_LZ4; // CA_NONE;// ;
 
 
 NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
@@ -174,6 +174,17 @@ void NetworkStuff::receiveMessageFromGameClient(){
 
 	Engine::numFramesRendered = msgBuffer.frameNr;
   Engine::done = msgBuffer.doExit;
+
+  /* hijack hack
+  Engine::accelerometerChangedThisFrame = false;
+  
+  Engine::previousNumAccelerometerHits = Engine::numAccelerometerHits;
+  Engine::numAccelerometerHits = msgBuffer.rectBottom;
+
+  if (Engine::previousNumAccelerometerHits != Engine::numAccelerometerHits){
+    Engine::accelerometerChangedThisFrame = true;
+  }
+  */
 
   srand(Engine::currentTime);
 }
