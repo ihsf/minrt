@@ -23,7 +23,7 @@ RT_RayTracer::~RT_RayTracer(){
   delete frameBuffer;
   delete blockFB;
 	delete internalCamera;
-  delete[] etcdata;
+  //delete[] etcdata;
 }
 
 void RT_RayTracer::initCamera(){
@@ -56,6 +56,7 @@ void RT_RayTracer::init(){
 	initCamera();
 
   // preload frame buffer with static image      ToDo: can be removed for release
+  /*
   if(Engine::compressFileName){
     CTexture image;
 
@@ -76,6 +77,7 @@ void RT_RayTracer::init(){
     uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
     memcpy(fb1, image.data, Engine::screenWidthRT * Engine::screenHeightRT * sizeof(uint32_t));
   }
+  */
 }
 
 void RT_RayTracer::clearFrameBuffers(){
@@ -115,12 +117,12 @@ void RT_RayTracer::renderFrameETC() {
   taskManager.deleteAllTasks();
   createRenderingTasks();
 
-  if (Engine::server || Engine::compressFileName) {
+  if (Engine::server /*|| Engine::compressFileName*/) {
     auto etc1_fun = [&] (size_t i) {
       // render the tile to get RGBA data into the framebuffer
-      if(!Engine::compressFileName){   // ToDo: if clause can be removed for release
+//      if(!Engine::compressFileName){   // ToDo: if clause can be removed for release
         taskManager.tasks[i]->run();
-      }
+//      }
 
       auto src = fb1 + widthFB1 * Engine::RENDERLINE_SIZE * i;
       if (Engine::rectMode) {
@@ -130,7 +132,7 @@ void RT_RayTracer::renderFrameETC() {
 
       // copy RGBA data from fb1 into the blockwise-oriented fb2
       for (int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++) {  // if RENDERLINE_SIZE=4 then this loop will only be executed once
-        #pragma omp simd
+        //#pragma omp simd
         for (int blockX = 0; blockX < widthFB2 / 4; blockX++) {
           for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
@@ -195,9 +197,9 @@ void RT_RayTracer::renderFrameETC() {
       case Engine::TASKDISPATCH: task_dispatch(); break;
     }
 
-    if(Engine::compressFileName){
-      savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
-    }
+    //if(Engine::compressFileName){
+    //  savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
+    //}
   } else {
     for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
       TaskDispatch::Queue([this, i] {
@@ -214,8 +216,8 @@ void RT_RayTracer::renderFrameETC() {
 #endif
 
 void RT_RayTracer::savePKM(unsigned char* compressedData, int sizeX, int sizeY){
-  if(!Engine::compressFileName)
-    return;
+  //if(!Engine::compressFileName)
+  //  return;
 
   const int compressedSize = (sizeX * sizeY * 4) / 8;
 
@@ -228,7 +230,8 @@ void RT_RayTracer::savePKM(unsigned char* compressedData, int sizeX, int sizeY){
   header.origHeight = ByteSwap16(sizeY);
 
   char newFileName[256];
-  strcpy(newFileName, Engine::compressFileName);
+  //strcpy(newFileName, Engine::compressFileName);
+  strcpy(newFileName, "savedpkm");
   strcat(newFileName, ".pkm");
 
   FILE* out = fopen(newFileName, "wb");

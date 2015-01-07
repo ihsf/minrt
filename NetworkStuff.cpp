@@ -10,7 +10,7 @@ enum CompressionAlgorithm
   CA_LZ4HC
 };
 
-CompressionAlgorithm compalg = CA_LZ4;
+CompressionAlgorithm compalg = CA_NONE;// CA_LZ4;
 
 
 NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
@@ -22,12 +22,12 @@ NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   lz4Buf = NULL;
   numBytesToSend = 0;
 
-  if(Engine::compressFileName){
-    determineNumBytesToSend();
-    outputBuffer = new unsigned char[numBytesToSend * 2];
-    frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
-    lz4Buf = new char[LZ4_compressBound(numBytesToSend)];
-  }
+  //if(Engine::compressFileName){
+  //  determineNumBytesToSend();
+  //  outputBuffer = new unsigned char[numBytesToSend * 2];
+  //  frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
+  //  lz4Buf = new char[LZ4_compressBound(numBytesToSend)];
+  //}
 
   if (!Engine::server)
     return;
@@ -224,10 +224,10 @@ void NetworkStuff::sendMessageToGameClient(){
     break;
   }
 
-  if(!Engine::compressFileName){
+//  if(!Engine::compressFileName){
     SDLNet_TCP_Send(Engine::csd, &size, 4);
     SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
-  } else {
+/*  } else {
     switch(compalg){
       case CA_NONE:
         cout << "No compression. Size:    ";
@@ -264,6 +264,7 @@ void NetworkStuff::sendMessageToGameClient(){
       exit(1);
     }
   }
+*/
 }
 
 

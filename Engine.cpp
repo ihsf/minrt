@@ -1,6 +1,6 @@
 #include "Engine.h"
 
-#if 0
+#if 1
   int Engine::screenWidthRT = 2560;  // needs to be divisable by RENDERTILE_SIZE
   int Engine::screenHeightRT = 1440;  // needs to be divisable by RENDERTILE_SIZE
   int Engine::screenWidthGL = 2560;
@@ -41,7 +41,13 @@ bool Engine::done = false;
 
 float Engine::currentTime = 0.0f;
 
-bool Engine::server = false;    // true; //  
+#if 1
+bool Engine::server = true;
+bool Engine::dedicated = true;
+#else
+bool Engine::server = false;
+bool Engine::dedicated = false;
+#endif
 
 TCPsocket Engine::sd = NULL;
 TCPsocket Engine::csd = NULL;
@@ -51,8 +57,6 @@ IPaddress* Engine::remoteIP = NULL;
 int Engine::serverPort = 2000;
 
 int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
-
-bool Engine::dedicated = false; //true;  //true; //  
 
 bool Engine::debugLatency = false;// true;
 int Engine::debugNumCameraChanges = 0;
@@ -69,7 +73,7 @@ float Engine::frameInterval = 0.3f;
 float Engine::frameTime = 0.0f;
 float Engine::lastTime = 0.0f;
 
-char* Engine::compressFileName = NULL;
+//char* Engine::compressFileName = NULL;
 
 int Engine::rectLeft = -1;
 int Engine::rectTop = -1;
@@ -133,14 +137,14 @@ void Engine::parseArgv(int argc, char *argv[]){
     // 
     // compress   // ToDo: can be removed for release
     // 
-    else if(!strcmp(argv[i], "-compress")){
-      // make sure there is a next argv[]
-      if(i < argc - 1){
-        compressFileName = new char[strlen(argv[i + 1]) + 1];
-        strcpy(compressFileName, argv[i + 1]);
-        cout << "Compressing file: " << compressFileName << endl;
-      }
-    }
+    //else if(!strcmp(argv[i], "-compress")){
+    //  // make sure there is a next argv[]
+    //  if(i < argc - 1){
+    //    compressFileName = new char[strlen(argv[i + 1]) + 1];
+    //    strcpy(compressFileName, argv[i + 1]);
+    //    cout << "Compressing file: " << compressFileName << endl;
+    //  }
+    //}
   }
 }
 
