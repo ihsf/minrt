@@ -132,7 +132,6 @@ void RT_RayTracer::renderFrameETC() {
 
       // copy RGBA data from fb1 into the blockwise-oriented fb2
       for (int blockY = 0; blockY < Engine::RENDERLINE_SIZE/4; blockY++) {  // if RENDERLINE_SIZE=4 then this loop will only be executed once
-        //#pragma omp simd
         for (int blockX = 0; blockX < widthFB2 / 4; blockX++) {
           for (int x = 0; x < 4; x++) {
             for (int y = 0; y < 4; y++) {
@@ -181,6 +180,9 @@ void RT_RayTracer::renderFrameETC() {
         etc1_fun(i);
         #endif
       }
+      #ifdef __cilk
+      cilk_sync;
+      #endif
     };
     auto task_dispatch = [&] () {
       for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
@@ -201,11 +203,13 @@ void RT_RayTracer::renderFrameETC() {
     //  savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
     //}
   } else {
-    for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
-      TaskDispatch::Queue([this, i] {
-        taskManager.tasks[i]->run();
-      });
-      TaskDispatch::Sync();
+    std::cout << "renderFrame()\n";
+    switch (Engine::methodToMultiThread) {
+      case Engine::OPENMP:       runTasksOpenMP();         break;
+      case Engine::OPENMPT:      runTasksOpenMPT();        break;
+      case Engine::CILK:         runTasksCilk();           break;
+      default:
+      case Engine::TASKDISPATCH: runTasksTaskDispatcher(); break;
     }
   }
 }
@@ -318,7 +322,7 @@ void RT_RayTracer::renderScene(){
 	}
 }
 
-void RT_RayTracer::runTasksOpenMP(){
+void RT_RayTracer::runTasksOpenMP() {
   size_t e = taskManager.tasks.size();
   #pragma omp parallel for
   for (size_t i = 0; i < e; ++i) {
@@ -326,7 +330,7 @@ void RT_RayTracer::runTasksOpenMP(){
   }
 }
 
-void RT_RayTracer::runTasksOpenMPT(){
+void RT_RayTracer::runTasksOpenMPT() {
   #pragma omp parallel
   #pragma omp single
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
@@ -335,7 +339,7 @@ void RT_RayTracer::runTasksOpenMPT(){
   }
 }
 
-void RT_RayTracer::runTasksCilk(){
+void RT_RayTracer::runTasksCilk() {
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     #ifdef __cilk
     cilk_spawn(taskManager.tasks[i]->run());
@@ -343,10 +347,13 @@ void RT_RayTracer::runTasksCilk(){
     taskManager.tasks[i]->run();
     #endif
   }
+  #ifdef __cilk
+  // added implicitly by the compiler at the end of a spawning function
+  cilk_sync;
+  #endif
 }
 
-void RT_RayTracer::runTasksTaskDispatcher()
-{
+void RT_RayTracer::runTasksTaskDispatcher() {
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     TaskDispatch::Queue( [this, i]{ taskManager.tasks[i]->run(); } );
   }
