@@ -81,6 +81,13 @@ static const int NETWORK_PROTOCOL_VERSION = 10;
 static const int NETWORK_PROTCOL_MAGICK = 123456;
 const char * const MINRT_VERSION = "0.11";
 
+enum class MultiThreadMethods {
+  TASKDISPATCH = 1,
+  OPENMP       = 2,
+  OPENMPT      = 3,
+  CILK         = 4,
+};
+
 class Engine {
 	public:
 		Engine(){};
@@ -111,7 +118,7 @@ class Engine {
 
 		static float currentTime;
 
-    static int methodToMultiThread;
+    static MultiThreadMethods methodToMultiThread;
 
     static CVector2i relativeMouseMotion;
 
@@ -150,13 +157,6 @@ class Engine {
     static int numAccelerometerHits;
     static bool accelerometerChangedThisFrame;
 
-    typedef enum{
-      OPENMP = 1,
-      OPENMPT = 2,
-      CILK = 3,
-      TASKDISPATCH = 4
-    } enum_MultiThreadMethods;
-
     static void calculateFrameRate();
 
     static bool isPointInsideRect(int x, int y);
@@ -167,8 +167,5 @@ class Engine {
     static float lastTime;				// This will hold the time from the last frame	
     static void parseArgv(int argc, char *argv[]);
 };
-
-
-
 
 #endif

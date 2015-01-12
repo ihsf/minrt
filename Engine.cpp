@@ -60,7 +60,7 @@ IPaddress* Engine::remoteIP = NULL;
 
 int Engine::serverPort = 2000;
 
-int Engine::methodToMultiThread = Engine::TASKDISPATCH;  // might be overwritten in Engine::init
+MultiThreadMethods Engine::methodToMultiThread = MultiThreadMethods::TASKDISPATCH;  // might be overwritten in Engine::init
 
 bool Engine::debugLatency = false;// true;  //
 int Engine::debugNumCameraChanges = 0;
@@ -100,7 +100,7 @@ void Engine::init(int argc, char *argv[]){
   parseArgv(argc, argv);
 
 #ifdef __cilk
-  //methodToMultiThread = Engine::CILK;
+  //methodToMultiThread = MultiThreadMethods::CILK;
 #endif
 }
 

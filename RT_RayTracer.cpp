@@ -192,25 +192,17 @@ void RT_RayTracer::renderFrameETC() {
     };
 
     switch (Engine::methodToMultiThread) {
-      case Engine::OPENMP:       ompf_dispatch(); break;
-      case Engine::OPENMPT:      ompt_dispatch(); break;
-      case Engine::CILK:         cilk_dispatch(); break;
-      default:
-      case Engine::TASKDISPATCH: task_dispatch(); break;
+      case MultiThreadMethods::TASKDISPATCH: task_dispatch(); break;
+      case MultiThreadMethods::OPENMP:       ompf_dispatch(); break;
+      case MultiThreadMethods::OPENMPT:      ompt_dispatch(); break;
+      case MultiThreadMethods::CILK:         cilk_dispatch(); break;
     }
 
     //if(Engine::compressFileName){
     //  savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
     //}
   } else {
-    std::cout << "renderFrame()\n";
-    switch (Engine::methodToMultiThread) {
-      case Engine::OPENMP:       runTasksOpenMP();         break;
-      case Engine::OPENMPT:      runTasksOpenMPT();        break;
-      case Engine::CILK:         runTasksCilk();           break;
-      default:
-      case Engine::TASKDISPATCH: runTasksTaskDispatcher(); break;
-    }
+    renderScene();
   }
 }
 
@@ -294,32 +286,17 @@ sprintf(fullDebugTaskName, "%s_%i", debugTaskName, i);
 taskRenderTile->setDescription(fullDebugTaskName);
 #endif
 
-void RT_RayTracer::renderScene(){	
+void RT_RayTracer::renderScene() {
   taskManager.deleteAllTasks();
 
   createRenderingTasks();
 
-	switch(Engine::methodToMultiThread){
-		case Engine::OPENMP:
-			runTasksOpenMP();
-			break;
-		
-		case Engine::OPENMPT:
-			runTasksOpenMPT();
-			break;
-
-		case Engine::CILK:
-			runTasksCilk();
-			break;
-
-    case Engine::TASKDISPATCH:
-      runTasksTaskDispatcher();
-      break;
-
-		default:
-			cout << "RT_RayTracer::renderScene: Invalid method to multi-thread" << endl;
-			break;
-	}
+  switch (Engine::methodToMultiThread) {
+    case MultiThreadMethods::TASKDISPATCH: runTasksTaskDispatcher(); break;
+    case MultiThreadMethods::OPENMP:       runTasksOpenMP();         break;
+    case MultiThreadMethods::OPENMPT:      runTasksOpenMPT();        break;
+    case MultiThreadMethods::CILK:         runTasksCilk();           break;
+  }
 }
 
 void RT_RayTracer::runTasksOpenMP() {
