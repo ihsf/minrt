@@ -53,12 +53,10 @@ class NetworkStuff {
 		int numBytesToSend;
 
 		void init();
-		//void initPThread();
 		void determineNumBytesToSend();		
 		void receiveInitPacket();
 
     void sendMessageToGameClientETC1noThread();
-    //void sendMessageToGameClientFFMPEG();
 
     void copyRect(unsigned char* copiedBuffer, unsigned char* frameBuffer);
 };

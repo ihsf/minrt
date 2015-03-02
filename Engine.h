@@ -161,8 +161,6 @@ class Engine {
 
     static bool isPointInsideRect(int x, int y);
 
-    //static char* compressFileName;  // ToDo: can be removed for release
-
 	private:		
     static float lastTime;				// This will hold the time from the last frame	
     static void parseArgv(int argc, char *argv[]);

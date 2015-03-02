@@ -16,7 +16,7 @@ class RT_Camera {
     void computeCameraCoordinateSystem();
     void setupRayQuery(int x, int y, float sizeXminus1Half, float sizeYminus1Half, RT_RayQuery* rayQuery);
 
-    void setPosition(const CVector3* p){ Assert(p, "setEye p"); position.x = p->x; position.y = p->y; position.z = p->z; }
+    void setPosition(const CVector3* p){ Assert(p, "setPosition p"); position.x = p->x; position.y = p->y; position.z = p->z; }
     void setPosition(float x, float y, float z){ position.x = x; position.y = y; position.z = z; }
 		void setLookAt(const CVector3* p){ Assert(p, "setLookAt p"); lookAt.x = p->x; lookAt.y = p->y; lookAt.z = p->z; }
 		void setLookAt(float x, float y, float z){ 	lookAt.x = x; lookAt.y = y; lookAt.z = z; } 

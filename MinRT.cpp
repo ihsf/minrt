@@ -59,19 +59,13 @@ void doGameLoop(SDLstuff* sdlstuff, Camera* camera, RT_RayTracer* rayTracer, Ope
   Engine::calculateFrameRate();
   camera->update();
 
-  //if(Engine::compressFileName) {
-  //  networkStuff->sendMessageToGameClient();
-  //  openglstuff->render();
-  //  openglstuff->swapBuffers();
-  //} else {
-    if(Engine::server) {
-      networkStuff->sendMessageToGameClient();
-    } else {
-      rayTracer->renderFrame();
-      openglstuff->render();
-      openglstuff->swapBuffers();
-    }
-  //}
+  if(Engine::server) {
+    networkStuff->sendMessageToGameClient();
+  } else {
+    rayTracer->renderFrame();
+    openglstuff->render();
+    openglstuff->swapBuffers();
+  }
 
   printAverageFPS();
 }

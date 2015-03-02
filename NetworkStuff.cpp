@@ -10,7 +10,7 @@ enum CompressionAlgorithm
   CA_LZ4HC
 };
 
-CompressionAlgorithm compalg = CA_LZ4; // CA_NONE;// ;
+CompressionAlgorithm compalg = CA_LZ4; // CA_NONE; //
 
 
 NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
@@ -22,20 +22,13 @@ NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   lz4Buf = NULL;
   numBytesToSend = 0;
 
-  //if(Engine::compressFileName){
-  //  determineNumBytesToSend();
-  //  outputBuffer = new unsigned char[numBytesToSend * 2];
-  //  frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
-  //  lz4Buf = new char[LZ4_compressBound(numBytesToSend)];
-  //}
-
   if (!Engine::server)
     return;
 
   init();
   determineNumBytesToSend();
 
-  // FIXME. Try without the HACK. HACK *2
+  // FIXME. Try without the HACK: *2
   outputBuffer = new unsigned char[numBytesToSend * 2];
   frameBufferCopy = new unsigned char[Engine::screenWidthRT * Engine::screenHeightRT * 4];
   lz4Buf = new char[LZ4_compressBound( numBytesToSend )];
@@ -175,17 +168,6 @@ void NetworkStuff::receiveMessageFromGameClient(){
 	Engine::numFramesRendered = msgBuffer.frameNr;
   Engine::done = msgBuffer.doExit;
 
-  /* hijack hack
-  Engine::accelerometerChangedThisFrame = false;
-  
-  Engine::previousNumAccelerometerHits = Engine::numAccelerometerHits;
-  Engine::numAccelerometerHits = msgBuffer.rectBottom;
-
-  if (Engine::previousNumAccelerometerHits != Engine::numAccelerometerHits){
-    Engine::accelerometerChangedThisFrame = true;
-  }
-  */
-
   srand(Engine::currentTime);
 }
 
@@ -199,25 +181,7 @@ void NetworkStuff::copyRect(unsigned char* copiedBuffer, unsigned char* frameBuf
 
 
 void NetworkStuff::sendMessageToGameClient(){
-  //WindowsHelper::getMsElapsed();
-
   rayTracer->renderFrameETC();
-
-  //float timeForRendering = WindowsHelper::getMsElapsed();  
-
-  //WindowsHelper::getMsElapsed();
-
-#if 0
-  if(!Engine::rectMode){
-    memcpy(frameBufferCopy, rayTracer->getFrameBuffer(), Engine::screenWidthRT * Engine::screenHeightRT * 4);
-    Etc1Fast::convertRGBAtoETC1(outputBuffer, frameBufferCopy, Engine::screenWidthRT, Engine::screenHeightRT);
-  } else {
-    copyRect(frameBufferCopy, rayTracer->getFrameBuffer());
-    Etc1Fast::convertRGBAtoETC1(outputBuffer, frameBufferCopy, Engine::rectSizeX, Engine::rectSizeY);
-  }  
-#endif
-
-  //float etc1EncodeTime = WindowsHelper::getMsElapsed();
 
   auto src = rayTracer->getDataETC();
   int size = -1;
@@ -235,47 +199,8 @@ void NetworkStuff::sendMessageToGameClient(){
     break;
   }
 
-//  if(!Engine::compressFileName){
-    SDLNet_TCP_Send(Engine::csd, &size, 4);
-    SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
-/*  } else {
-    switch(compalg){
-      case CA_NONE:
-        cout << "No compression. Size:    ";
-        break;
-      case CA_LZ4:
-        cout << "LZ4 compression. Size:   ";
-        break;
-      case CA_LZ4HC:
-        cout << "LZ4HC compression. Size: ";
-        break;
-    }
-
-    cout << size << endl;
-
-    const int sizeRGB = Engine::screenWidthRT * Engine::screenHeightRT * 3;
-    const int sizeETC1 = sizeRGB / 6;
-
-    cout << sizeETC1 << " bytes ETC1 to " << size << "        LZ4. Ratio 1:" << (float)sizeETC1 / (float)size << endl;
-    cout << sizeRGB <<  " bytes RGB  to " << size << " ETC1 + LZ4. Ratio 1:" << (float)sizeRGB / (float)size << endl;
-
-    // create empty file with the info from above in the filename
-    char newFileName[256];
-    sprintf(newFileName, "%s.txt.RGBsize_%i___ETCsize_%i___LZ4size_%i___ratioRGBtoETC1andLZ4_%f___ratioRGBtoLZ4_%f",
-      Engine::compressFileName, sizeRGB, sizeETC1, size, (float)sizeRGB / (float)size, (float)sizeETC1 / (float)size);
-
-    FILE* out = fopen(newFileName, "wb");
-    fclose(out);
-
-    
-    Engine::numFramesRendered++;
-
-    if(Engine::numFramesRendered > 1){      
-      SDL_Delay(2000);
-      exit(1);
-    }
-  }
-*/
+  SDLNet_TCP_Send(Engine::csd, &size, 4);
+  SDLNet_TCP_Send(Engine::csd, lz4Buf, abs(size));
 }
 
 

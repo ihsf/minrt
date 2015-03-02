@@ -84,8 +84,6 @@ float Engine::frameInterval = 0.3f;
 float Engine::frameTime = 0.0f;
 float Engine::lastTime = 0.0f;
 
-//char* Engine::compressFileName = NULL;
-
 int Engine::rectLeft = -1;
 int Engine::rectTop = -1;
 int Engine::rectRight = -1;
@@ -144,18 +142,6 @@ void Engine::parseArgv(int argc, char *argv[]){
       serverPort = atoi(argv[i + 1]);
       cout << "Overwriting port to: " << serverPort << endl;
     }
-
-    // 
-    // compress   // ToDo: can be removed for release
-    // 
-    //else if(!strcmp(argv[i], "-compress")){
-    //  // make sure there is a next argv[]
-    //  if(i < argc - 1){
-    //    compressFileName = new char[strlen(argv[i + 1]) + 1];
-    //    strcpy(compressFileName, argv[i + 1]);
-    //    cout << "Compressing file: " << compressFileName << endl;
-    //  }
-    //}
   }
 }
 

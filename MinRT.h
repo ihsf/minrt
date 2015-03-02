@@ -24,7 +24,6 @@ int main(int argc, char *argv[]);
 void doGameLoop(SDLstuff* sdlstuff, Camera* camera, RT_RayTracer* rayTracer, OpenGLstuff* openglstuff, NetworkStuff* networkStuff);
 
 void printAverageFPS();
-//void init_Network(int argc, char *argv[]);
 
 #endif 
 

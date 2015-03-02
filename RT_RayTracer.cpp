@@ -54,30 +54,6 @@ void RT_RayTracer::init(){
 
   clearFrameBuffers();
 	initCamera();
-
-  // preload frame buffer with static image      ToDo: can be removed for release
-  /*
-  if(Engine::compressFileName){
-    CTexture image;
-
-    image.LoadTGA(Engine::compressFileName);
-
-    if(image.getSizeX() != Engine::screenWidthRT || image.getSizeY() != Engine::screenHeightRT){
-      cout << Engine::compressFileName << " has wrong resolution for frame buffer" << endl;
-      exit(1);
-    }
-
-    if(image.getChannels() == 3){
-      image.convertFrom24BitTo32Bit();
-    }
-
-    image.flipVertically();
-
-    // copy data into framebuffer
-    uint32_t* fb1 = (uint32_t*)frameBuffer->getFrameBuffer();
-    memcpy(fb1, image.data, Engine::screenWidthRT * Engine::screenHeightRT * sizeof(uint32_t));
-  }
-  */
 }
 
 void RT_RayTracer::clearFrameBuffers(){
@@ -117,12 +93,10 @@ void RT_RayTracer::renderFrameETC() {
   taskManager.deleteAllTasks();
   createRenderingTasks();
 
-  if (Engine::server /*|| Engine::compressFileName*/) {
+  if (Engine::server) {
     auto etc1_fun = [&] (size_t i) {
       // render the tile to get RGBA data into the framebuffer
-//      if(!Engine::compressFileName){   // ToDo: if clause can be removed for release
-        taskManager.tasks[i]->run();
-//      }
+      taskManager.tasks[i]->run();
 
       auto src = fb1 + widthFB1 * Engine::RENDERLINE_SIZE * i;
       if (Engine::rectMode) {
@@ -197,10 +171,6 @@ void RT_RayTracer::renderFrameETC() {
       case MultiThreadMethods::OPENMPT:      ompt_dispatch(); break;
       case MultiThreadMethods::CILK:         cilk_dispatch(); break;
     }
-
-    //if(Engine::compressFileName){
-    //  savePKM((unsigned char*)getDataETC(), Engine::screenWidthRT, Engine::screenHeightRT);
-    //}
   } else {
     renderScene();
   }
@@ -210,37 +180,6 @@ void RT_RayTracer::renderFrameETC() {
 #ifndef ByteSwap16
   #define ByteSwap16(n) ( ((((unsigned int) n) << 8) & 0xFF00) | ((((unsigned int) n) >> 8) & 0x00FF) )
 #endif
-
-void RT_RayTracer::savePKM(unsigned char* compressedData, int sizeX, int sizeY){
-  //if(!Engine::compressFileName)
-  //  return;
-
-  const int compressedSize = (sizeX * sizeY * 4) / 8;
-
-  ETC1Header header;
-  strcpy(header.tag, "PKM 10");
-  header.format = 0;
-  header.texWidth = ByteSwap16(sizeX);    // big-endian (= non-intel)
-  header.texHeight = ByteSwap16(sizeY);
-  header.origWidth = ByteSwap16(sizeX);
-  header.origHeight = ByteSwap16(sizeY);
-
-  char newFileName[256];
-  //strcpy(newFileName, Engine::compressFileName);
-  strcpy(newFileName, "savedpkm");
-  strcat(newFileName, ".pkm");
-
-  FILE* out = fopen(newFileName, "wb");
-  fwrite(&header, sizeof(ETC1Header), 1, out);
-  size_t writtenBytes = fwrite(compressedData, sizeof(unsigned char), compressedSize, out);
-
-  cout << "savePKM ETC1 compressedSize: " << compressedSize << endl;
-  cout << "Saved " << newFileName << endl;
-  cout << "Use Android tools to convert to png: " << endl;
-  cout << "  etc1tool " << newFileName << " --decode" << endl;
-
-  fclose(out);
-}
 
 void RT_RayTracer::look(){
 	CVector3 position = gameCamera->getPosition();
@@ -278,13 +217,6 @@ void RT_RayTracer::createRenderingTasks(){
   }
 }
 
-#if 0
-char fullDebugTaskName[DEBUG_STRING_SIZE];
-char debugTaskName[] = "rendTile";
-// set debug name for task
-sprintf(fullDebugTaskName, "%s_%i", debugTaskName, i);
-taskRenderTile->setDescription(fullDebugTaskName);
-#endif
 
 void RT_RayTracer::renderScene() {
   taskManager.deleteAllTasks();
@@ -319,14 +251,14 @@ void RT_RayTracer::runTasksOpenMPT() {
 void RT_RayTracer::runTasksCilk() {
   for (size_t i = 0, e = taskManager.tasks.size(); i < e; ++i) {
     #ifdef __cilk
-    cilk_spawn(taskManager.tasks[i]->run());
+      cilk_spawn(taskManager.tasks[i]->run());
     #else
-    taskManager.tasks[i]->run();
+      taskManager.tasks[i]->run();
     #endif
   }
   #ifdef __cilk
-  // added implicitly by the compiler at the end of a spawning function
-  cilk_sync;
+    // added implicitly by the compiler at the end of a spawning function
+    cilk_sync;
   #endif
 }
 

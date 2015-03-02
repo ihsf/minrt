@@ -51,10 +51,9 @@ class RT_RayTracer {
 		void runTasksOpenMPT();
     void runTasksTaskDispatcher();
 
-    void savePKM(unsigned char* compressedData, int sizeX, int sizeY);  // remove later
-
     RT_Camera* internalCamera;
-    RT_FrameBuffer* frameBuffer, *blockFB;
+    RT_FrameBuffer* frameBuffer;
+    RT_FrameBuffer* blockFB;
     unsigned char* etcdata;
 
     // remove later
