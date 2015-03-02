@@ -25,7 +25,7 @@ class Etc1Fast {
 
 
 	private:
-    finline static void ExtractBlock( const unsigned char* inPtr, int width, unsigned char* colorBlock ){
+    finline static void extractBlock(const unsigned char* inPtr, int width, unsigned char* colorBlock){
       for(int x = 0; x < 4; x++) {
         for(int y = 0; y < 4; y++){
           colorBlock[x*4*4 + y * 4    ] = *(inPtr + (x * 4 + y * width * 4) + 2);

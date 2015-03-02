@@ -49,7 +49,7 @@ void Etc1Fast::etc1helperFunction(unsigned char* compressedDataPointer, unsigned
   for ( int i = 0; i < sizeX; i += 4) {
     __align(16) unsigned char block[64];
     // copies color values into a block of 4x4 (unsigned char rgba)
-	  ExtractBlock( currentInBuf + i * 4, sizeX, block );
+	  extractBlock( currentInBuf + i * 4, sizeX, block );
 
     unsigned char* currentCompressedDataPointer = compressedDataPointer + 8 * (i / 4) + (8 * sizeX / 4) * (j / 4);
     pack_etc1_block((unsigned long long*)currentCompressedDataPointer, block);
