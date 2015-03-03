@@ -1,6 +1,8 @@
 #include "Camera.h"
 #include <float.h>
 
+// class based on www.gametutorials.com - see license.txt
+
 Camera::Camera(){
   mainWindow = NULL;
 	
@@ -53,9 +55,10 @@ void Camera::applyMouseLook(){
 	}
 
 	CVector3 axis;
-    axis = axis.cross(viewMinusPosition, upVector);
+  axis = axis.cross(viewMinusPosition, upVector);
 	axis.normalize();
 
+  // check to avoid invalid camera angles
 #ifdef WIN32
 	if(_isnan(axis.x )){
 #else
@@ -73,7 +76,7 @@ void Camera::applyMouseLook(){
 void Camera::rotateView(float angle, float x, float y, float z){
   CVector3 direction = getDirectionNormalized(); 
 
-  // mouse sensitivity
+  // increase mouse/rotation sensitivity
 	angle *= 3.0f;
 	
   const float cosTheta = cosf(angle);
@@ -81,17 +84,17 @@ void Camera::rotateView(float angle, float x, float y, float z){
 
 	CVector3 newView;
 
-  newView.x  = (cosTheta + (1 - cosTheta) * x * x)       * direction.x;
-  newView.x += ((1 - cosTheta) * x * y - z * sinTheta)   * direction.y;
-  newView.x += ((1 - cosTheta) * x * z + y * sinTheta)   * direction.z;
+  newView.x  = (cosTheta + (1 - cosTheta) * x * x)     * direction.x;
+  newView.x += ((1 - cosTheta) * x * y - z * sinTheta) * direction.y;
+  newView.x += ((1 - cosTheta) * x * z + y * sinTheta) * direction.z;
 
-  newView.y  = ((1 - cosTheta) * x * y + z * sinTheta)   * direction.x;
-  newView.y += (cosTheta + (1 - cosTheta) * y * y)       * direction.y;
-  newView.y += ((1 - cosTheta) * y * z - x * sinTheta)   * direction.z;
+  newView.y  = ((1 - cosTheta) * x * y + z * sinTheta) * direction.x;
+  newView.y += (cosTheta + (1 - cosTheta) * y * y)     * direction.y;
+  newView.y += ((1 - cosTheta) * y * z - x * sinTheta) * direction.z;
 
-  newView.z  = ((1 - cosTheta) * x * z - y * sinTheta)   * direction.x;
-  newView.z += ((1 - cosTheta) * y * z + x * sinTheta)   * direction.y;
-  newView.z += (cosTheta + (1 - cosTheta) * z * z)       * direction.z;
+  newView.z  = ((1 - cosTheta) * x * z - y * sinTheta) * direction.x;
+  newView.z += ((1 - cosTheta) * y * z + x * sinTheta) * direction.y;
+  newView.z += (cosTheta + (1 - cosTheta) * z * z)     * direction.z;
   
 #ifdef WIN32    
 	if(_isnan(newView.x )){
@@ -103,7 +106,6 @@ void Camera::rotateView(float angle, float x, float y, float z){
 
   view = position + newView;
 }
-
 
 void Camera::strafeCamera(float speed){   
   position.x += strafe.x * -speed;

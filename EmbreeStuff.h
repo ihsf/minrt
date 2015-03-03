@@ -66,7 +66,6 @@ class EmbreeStuff {
       }
     }
 
-
     static finline void shootRay8(RT_RayQuery rayQuery[8]){
       __align(32)RTCRay8 ray;
 

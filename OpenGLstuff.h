@@ -11,7 +11,7 @@
 #include <GL/glu.h>
 #endif
 
-#include <SDL.h>					// for buffer swapping
+#include <SDL.h>				
 
 class OpenGLstuff{
 	public:

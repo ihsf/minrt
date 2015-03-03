@@ -10,8 +10,6 @@
 #include "RT_RayQuery.h"
 #include "RT_TaskManager.h"
 
-#include "CTexture.h" // ToDo: remove before release
-
 #include <math.h>
 #include <stdio.h>
 #include <vector>
@@ -55,16 +53,6 @@ class RT_RayTracer {
     RT_FrameBuffer* frameBuffer;
     RT_FrameBuffer* blockFB;
     unsigned char* etcdata;
-
-    // remove later
-    struct ETC1Header {
-      char tag[6];                  // "PKM 10"
-      unsigned short format;        // Format == number of mips (== zero)
-      unsigned short texWidth;       // Texture dimensions, multiple of 4 (big-endian)
-      unsigned short texHeight;
-      unsigned short origWidth;      // Original dimensions (big-endian)
-      unsigned short origHeight;
-    };
 };
 
 #endif

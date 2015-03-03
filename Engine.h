@@ -139,7 +139,7 @@ class Engine {
     static int embreeIntersect;
 
     // Networking stuff
-    static TCPsocket sd, csd; /* Socket descriptor, Client socket descriptor */
+    static TCPsocket sd, csd; // Socket descriptor, Client socket descriptor 
     static IPaddress ip, *remoteIP;
 
     static int serverPort;

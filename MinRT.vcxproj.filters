@@ -75,7 +75,6 @@
     <ClInclude Include="lz4-r123\lz4hc.h">
       <Filter>lz4</Filter>
     </ClInclude>
-    <ClInclude Include="CTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -142,7 +141,6 @@
     <ClCompile Include="lz4-r123\lz4hc.c">
       <Filter>lz4</Filter>
     </ClCompile>
-    <ClCompile Include="CTexture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="etc1">

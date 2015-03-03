@@ -18,26 +18,19 @@ float WindowsHelper::getMsElapsed() {
 
   float delta = 0.0f;
 
-  // Count number of ms per frame.
   if (freq == 0.0f){
     LARGE_INTEGER iFreq;
     QueryPerformanceFrequency(&iFreq);
 
-    // iFreq cycles / sec * 1 sec / 1000 ms = cycles / ms
     freq = float(iFreq.QuadPart) / 1000.0f;
   }
 
-  // Get elapsed time
   QueryPerformanceCounter((LARGE_INTEGER*)&count);
 
-  // Update color values.
   if (prevCount){
-    // Delta is a floating pointer number of 16ms "frames" elapsed since
-    // the last draw.  The DeltaColor values are based on 16ms updates.
     delta = float(count - prevCount) / freq;
   }
 
-  // Update previous time
   prevCount = count;
 
   return delta;

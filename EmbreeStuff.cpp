@@ -34,7 +34,7 @@ void EmbreeStuff::addSampleMesh1(){
 
     float localVertices[8 * 4];
 
-    //       x						 y					 z						 bogus       
+    //                      x						           y					                 z						              bogus       
     localVertices[0] = -37.604755f;  localVertices[1] = 32.398792f;  localVertices[2] = 35.277058f;   localVertices[3] = 0;
     localVertices[4] = 37.695309f;   localVertices[5] = 32.398792f;  localVertices[6] = 35.277058f;   localVertices[7] = 0;
     localVertices[8] = -37.604755f;  localVertices[9] = 32.398792f;  localVertices[10] = -35.795361f; localVertices[11] = 0;
@@ -87,7 +87,7 @@ void EmbreeStuff::addSampleMesh2(){
 
   float localVertices[4 * 4];
 
-  //       x						 y					 z						 bogus       
+  //                      x						           y					                 z						              bogus     
   localVertices[0] = -37.604755f; localVertices[1] = 0.317234f; localVertices[2] = 35.277061f;  localVertices[3] = 0;
   localVertices[4] = 37.695309f;  localVertices[5] = 0.317234f; localVertices[6] = 35.277061f;  localVertices[7] = 0;
   localVertices[8] = -37.604755f; localVertices[9] = 0.317238f; localVertices[10] = -35.795357f; localVertices[11] = 0;
@@ -118,8 +118,8 @@ void EmbreeStuff::addSampleMesh2(){
 void EmbreeStuff::addSampleMesh3(){
   RTCGeometryFlags geomFlags = RTC_GEOMETRY_STATIC;
 
-  int numTriangles = (14904 / 3);  //14904 / 3; // 1024; // 14904; // 882; // 4968;
-  int numVertices = 14904 * 4; // 2503;
+  int numTriangles = (14904 / 3);  
+  int numVertices = 14904 * 4; 
 
   unsigned geomID = rtcNewTriangleMesh(scene, geomFlags, numTriangles, numVertices, 1);
 
@@ -137,16 +137,8 @@ void EmbreeStuff::addSampleMesh3(){
     triangles[i].v0 = meshTriangles[i * 3];
     triangles[i].v1 = meshTriangles[i * 3 + 1];
     triangles[i].v2 = meshTriangles[i * 3 + 2];
-    /*
-    if(i > 880){
-      cout << "Tri " << meshTriangles[i * 3] << " " << meshTriangles[i * 3 + 1] << " " << meshTriangles[i * 3 + 2] << endl;
-      cout << "  => " << vertices[triangles[i].v0].x << " " << vertices[triangles[i].v0].y << " " << vertices[triangles[i].v0].z << endl;
-      cout << "  => " << vertices[triangles[i].v1].x << " " << vertices[triangles[i].v1].y << " " << vertices[triangles[i].v1].z << endl;
-      cout << "  => " << vertices[triangles[i].v2].x << " " << vertices[triangles[i].v2].y << " " << vertices[triangles[i].v2].z << endl;
-    }
-    */
   }
-  rtcUnmapBuffer(scene, geomID, RTC_VERTEX_BUFFER);  // move up
+  rtcUnmapBuffer(scene, geomID, RTC_VERTEX_BUFFER); 
   rtcUnmapBuffer(scene, geomID, RTC_INDEX_BUFFER);
 }
 

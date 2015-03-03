@@ -7,25 +7,25 @@
   int Engine::screenHeightGL = 1440;
 #else
   #if 0
-    int Engine::screenWidthRT = 1920;  // needs to be divisable by RENDERTILE_SIZE
-    int Engine::screenHeightRT = 1080;  // needs to be divisable by RENDERTILE_SIZE
+    int Engine::screenWidthRT = 1920;  
+    int Engine::screenHeightRT = 1080;  
     int Engine::screenWidthGL = 1920;
     int Engine::screenHeightGL = 1080;
   #else
     #if 0
-      int Engine::screenWidthRT = 1280;  // needs to be divisable by RENDERTILE_SIZE
-      int Engine::screenHeightRT = 720;  // needs to be divisable by RENDERTILE_SIZE
+      int Engine::screenWidthRT = 1280;  
+      int Engine::screenHeightRT = 720;  
       int Engine::screenWidthGL = 1280;
       int Engine::screenHeightGL = 720;
     #else
       #if 0
-        int Engine::screenWidthRT = 240;  // needs to be divisable by RENDERTILE_SIZE
-        int Engine::screenHeightRT = 240;  // needs to be divisable by RENDERTILE_SIZE
+        int Engine::screenWidthRT = 240;  
+        int Engine::screenHeightRT = 240; 
         int Engine::screenWidthGL = 240;
         int Engine::screenHeightGL = 240;
       #else
-        int Engine::screenWidthRT = 512;  // needs to be divisable by RENDERTILE_SIZE
-        int Engine::screenHeightRT = 256;  // needs to be divisable by RENDERTILE_SIZE
+        int Engine::screenWidthRT = 512;  
+        int Engine::screenHeightRT = 256;  
         int Engine::screenWidthGL = 512;
         int Engine::screenHeightGL = 256;
       #endif
@@ -69,7 +69,7 @@ int Engine::serverPort = 2000;
 
 MultiThreadMethods Engine::methodToMultiThread = MultiThreadMethods::TASKDISPATCH;  // might be overwritten in Engine::init
 
-bool Engine::debugLatency = false;// true;  //
+bool Engine::debugLatency = false;
 int Engine::debugNumCameraChanges = 0;
 
 float Engine::framesPerSecond = 1.0f;
@@ -103,10 +103,6 @@ void Engine::init(int argc, char *argv[]){
   }
 
   parseArgv(argc, argv);
-
-#ifdef __cilk
-  //methodToMultiThread = MultiThreadMethods::CILK;
-#endif
 }
 
 void Engine::calculateFrameRate(){

@@ -70,6 +70,8 @@ void doGameLoop(SDLstuff* sdlstuff, Camera* camera, RT_RayTracer* rayTracer, Ope
   printAverageFPS();
 }
 
+// another fps counter that averages over 8 frames
+// changed how often it should print with "rand() % 32 == 1"
 void printAverageFPS(){
   static int frameID = 0;
   static float elapsedTime = 0, totalTime = 0;

@@ -1,5 +1,7 @@
 #include "CVector3.h"
 
+// class based on www.gametutorials.com - see license.txt
+
 ostream& operator<<(ostream& s, const CVector3& vec){
 	s << "(" << vec.x << " " << vec.y << " " << vec.z << ")";
 	return s;

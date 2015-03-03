@@ -12,7 +12,6 @@ enum CompressionAlgorithm
 
 CompressionAlgorithm compalg = CA_LZ4; // CA_NONE; //
 
-
 NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   this->camera = camera_;
   this->rayTracer = rayTracer_;
@@ -178,7 +177,6 @@ void NetworkStuff::copyRect(unsigned char* copiedBuffer, unsigned char* frameBuf
     copiedBufferPointer += Engine::rectSizeX * 4;
   }
 }
-
 
 void NetworkStuff::sendMessageToGameClient(){
   rayTracer->renderFrameETC();

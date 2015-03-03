@@ -29,7 +29,9 @@ class RT_Camera {
     CVector3 position;
     CVector3 lookAt;
     CVector3 up;
-    CVector3 u, v, w;
+    CVector3 u;
+    CVector3 v;
+    CVector3 w;
 
     float viewDistance;
 };

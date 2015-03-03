@@ -73,7 +73,7 @@ void RT_RayTracer::renderFrame(){
   look();
   renderScene();
 
-  // in server mode the server will be told which frame number it is working at through the network packet
+  // in server mode, the server will be told which frame number it is working at through the network packet
   if(!Engine::server)  {
 	  Engine::numFramesRendered++;
   }
@@ -176,10 +176,6 @@ void RT_RayTracer::renderFrameETC() {
   }
 }
 
-
-#ifndef ByteSwap16
-  #define ByteSwap16(n) ( ((((unsigned int) n) << 8) & 0xFF00) | ((((unsigned int) n) >> 8) & 0x00FF) )
-#endif
 
 void RT_RayTracer::look(){
 	CVector3 position = gameCamera->getPosition();

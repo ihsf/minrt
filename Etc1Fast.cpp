@@ -7,11 +7,6 @@
   #include <cilk/cilk.h>
 #endif
 
-#ifndef ByteSwap16
-  #define ByteSwap16(n) ( ((((unsigned int) n) << 8) & 0xFF00) | ((((unsigned int) n) >> 8) & 0x00FF) )
-#endif
-
-
 void Etc1Fast::convertRGBAtoETC1(unsigned char* compressedData, unsigned char* data, int sizeX, int sizeY){
   if(sizeX < 4 || sizeY < 4){
     cout << "Etc1Fast::convertRGBAtoETC1: Invalid image size: " << sizeX << " x " << sizeY << endl;
