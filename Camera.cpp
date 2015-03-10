@@ -4,8 +4,6 @@
 // class based on www.gametutorials.com - see license.txt
 
 Camera::Camera(){
-  mainWindow = NULL;
-	
 	init();
 }
 
@@ -172,6 +170,7 @@ CVector3 Camera::getDirectionNormalized(){
   if(dir.magnitude() <0.01f) {
     cameraDirectionIsTooSmall++;
     if(cameraDirectionIsTooSmall){
+      // if this happened to often, we quit the application. most likely the client has already disconnected
 			if(cameraDirectionIsTooSmall > 1500 && Engine::server){
 				Engine::done = true;
       }

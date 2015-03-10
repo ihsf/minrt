@@ -36,7 +36,6 @@ class RT_RayQuery {
 	
 		finline RT_ShadingInfo* getShadingInfoPointer(){ return &shadingInfo; }
 
-
 	private:
     CVector3 origin;
     CVector3 direction;

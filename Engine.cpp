@@ -1,5 +1,7 @@
 #include "Engine.h"
 
+// frame rate calculation based on www.gametutorials.com - see license.txt
+
 #if 0
   int Engine::screenWidthRT = 2560;  // needs to be divisable by RENDERTILE_SIZE
   int Engine::screenHeightRT = 1440;  // needs to be divisable by RENDERTILE_SIZE
@@ -12,7 +14,7 @@
     int Engine::screenWidthGL = 1920;
     int Engine::screenHeightGL = 1080;
   #else
-    #if 0
+    #if 1
       int Engine::screenWidthRT = 1280;  
       int Engine::screenHeightRT = 720;  
       int Engine::screenWidthGL = 1280;
@@ -67,7 +69,7 @@ IPaddress* Engine::remoteIP = NULL;
 
 int Engine::serverPort = 2000;
 
-MultiThreadMethods Engine::methodToMultiThread = MultiThreadMethods::TASKDISPATCH;  // might be overwritten in Engine::init
+MultiThreadMethods Engine::methodToMultiThread = MultiThreadMethods::TASKDISPATCH; 
 
 bool Engine::debugLatency = false;
 int Engine::debugNumCameraChanges = 0;

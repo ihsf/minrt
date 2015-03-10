@@ -1,6 +1,6 @@
 Min-Project
 ===========
-Our code is released under the ... license.
+Our code is released under the Apache 2.0 license (see LICENSE-2_0.txt). Exceptions of this are marked at the beginning of the source and/or header files. The included code from Bartosz Taudul's etcpak is in agreement with Bartosz Taudul also under the Apache 2.0 license. 
 
 
 Intel Embree

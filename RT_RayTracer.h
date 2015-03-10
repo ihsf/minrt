@@ -4,7 +4,6 @@
 #include "Camera.h"
 #include "CVector2i.h"
 #include "Engine.h"
-#include "Etc1Fast.h"
 #include "RT_Camera.h"
 #include "RT_FrameBuffer.h"
 #include "RT_RayQuery.h"

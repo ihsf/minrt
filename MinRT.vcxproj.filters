@@ -9,9 +9,6 @@
     <ClInclude Include="OpenGLstuff.h" />
     <ClInclude Include="WindowsHelper.h" />
     <ClInclude Include="EmbreeStuff.h" />
-    <ClInclude Include="Etc1Fast.h">
-      <Filter>etc1</Filter>
-    </ClInclude>
     <ClInclude Include="ProcessRGB.hpp">
       <Filter>etc1</Filter>
     </ClInclude>
@@ -85,9 +82,6 @@
     <ClCompile Include="OpenGLstuff.cpp" />
     <ClCompile Include="WindowsHelper.cpp" />
     <ClCompile Include="EmbreeStuff.cpp" />
-    <ClCompile Include="Etc1Fast.cpp">
-      <Filter>etc1</Filter>
-    </ClCompile>
     <ClCompile Include="ProcessRGB.cpp">
       <Filter>etc1</Filter>
     </ClCompile>

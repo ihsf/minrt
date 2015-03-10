@@ -21,7 +21,6 @@ int main(int argc, char *argv[]){
   if (!Engine::server) {
     sdlstuff.init();
     openglstuff.init(sdlstuff.getMainWindow());
-    camera.setMainWindow(sdlstuff.getMainWindow());
   }
   rayTracer.init();
 

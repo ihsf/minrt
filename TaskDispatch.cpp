@@ -1,3 +1,6 @@
+// https://bitbucket.org/wolfpld/etcpak
+// Bartosz Taudul <wolf.pld@gmail.com>
+
 #include <assert.h>
 
 #include "TaskDispatch.hpp"

@@ -52,11 +52,7 @@ class Camera {
 
 		void update();		
 
-    void setMainWindow(SDL_Window* mainWindow_){ mainWindow = mainWindow_; }
-
 	private:
-    SDL_Window* mainWindow;
-
 		void init();
 
 		CVector3 position;                   

@@ -1,3 +1,6 @@
+// https://bitbucket.org/wolfpld/etcpak
+// Bartosz Taudul <wolf.pld@gmail.com>
+
 #ifdef _WIN32
 #  include <windows.h>
 #else

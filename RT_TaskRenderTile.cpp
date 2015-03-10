@@ -68,11 +68,9 @@ void RT_TaskRenderTile::run(){
           RT_ShadingInfo* shadingInfoPointer = rayQuery[i].getShadingInfoPointer();
 
           if(shadingInfoPointer->objectThatGotHit >= 0){
-            if(shadingInfoPointer->objectThatGotHit == 1){
-              // some colored shading for the floor
+            if(shadingInfoPointer->objectThatGotHit == 1){  // some colored shading for the floor              
               color = CVector3(0.0f + (rayQuery[i].getDirectionPointer()->x / 3.0f), 0.4f + (rayQuery[i].getDirectionPointer()->z / 3.0f), 0.8f);
-            } else if(shadingInfoPointer->objectThatGotHit == 2){
-              // bunny
+            } else if(shadingInfoPointer->objectThatGotHit == 2){   // bunny              
               CVector3 normal = CVector3(meshNormals[shadingInfoPointer->primIdThatGotHit * 4], meshNormals[shadingInfoPointer->primIdThatGotHit * 4 + 1],
                 meshNormals[shadingInfoPointer->primIdThatGotHit * 4 + 2]);
 
@@ -144,11 +142,9 @@ void RT_TaskRenderTile::run(){
           RT_ShadingInfo* shadingInfoPointer = rayQuery[i].getShadingInfoPointer();
 
           if(shadingInfoPointer->objectThatGotHit >= 0){
-            if(shadingInfoPointer->objectThatGotHit == 1){
-              // some colored shading for the floor
+            if(shadingInfoPointer->objectThatGotHit == 1){  // some colored shading for the floor
               color = CVector3(0.0f + (rayQuery[i].getDirectionPointer()->x / 3.0f), 0.4f + (rayQuery[i].getDirectionPointer()->z / 3.0f), 0.8f);
-            } else if(shadingInfoPointer->objectThatGotHit == 2){
-              // bunny
+            } else if(shadingInfoPointer->objectThatGotHit == 2){ // bunny
               CVector3 normal = CVector3(meshNormals[shadingInfoPointer->primIdThatGotHit * 4], meshNormals[shadingInfoPointer->primIdThatGotHit * 4 + 1],
                 meshNormals[shadingInfoPointer->primIdThatGotHit * 4 + 2]);
 

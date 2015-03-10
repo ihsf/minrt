@@ -1,6 +1,6 @@
-// ETC1 compression code from Bartosz Taudul
-// etcpak 0.2.1
-// https://bitbucket.org/wolfpld/etcpak/wiki/Home
+// https://bitbucket.org/wolfpld/etcpak
+// Bartosz Taudul <wolf.pld@gmail.com>
+
 #ifndef __PROCESSCOMMON_HPP__
 #define __PROCESSCOMMON_HPP__
 

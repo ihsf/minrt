@@ -1,5 +1,4 @@
 #include "SDLstuff.h"
-#include <SDL_syswm.h>
 
 SDLstuff::SDLstuff(RT_RayTracer* rayTracer_){
 	this->rayTracer = rayTracer_;
@@ -72,26 +71,26 @@ void SDLstuff::handleKeyPressEvent(SDL_Keysym* keysym){
 	SDL_Keycode key = keysym->sym;
     
 	switch(key){
-    case SDLK_ESCAPE:                                  // if it is ESCAPE
+    case SDLK_ESCAPE:                                  
 				Engine::done = true;		
 			break;
 
-    case SDLK_UP:                                     // If we hit the UP arrow Key
+    case SDLK_UP:                                     
     case SDLK_w:
       Engine::upKey = true;      
       break;
         
-    case SDLK_DOWN:                                    // If we hit the Down arrow Key
+    case SDLK_DOWN:                                   
     case SDLK_s:
 		  Engine::downKey = true; 
       break;
 
-    case SDLK_RIGHT:                                   // If we hit the right arrow Key
+    case SDLK_RIGHT:                                  
     case SDLK_d:
       Engine::leftKey = true;
       break;
 
-    case SDLK_LEFT:                                    // If we hit the left arrow key
+    case SDLK_LEFT:                                   
     case SDLK_a:
       Engine::rightKey = true; 
       break;

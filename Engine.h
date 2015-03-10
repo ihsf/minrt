@@ -79,7 +79,7 @@ static const int DEFAULT_RAY_MAX_DISTANCE = 100000.0f;
 static const int DEBUG_STRING_SIZE = 16;
 static const int NETWORK_PROTOCOL_VERSION = 10;
 static const int NETWORK_PROTCOL_MAGICK = 123456;
-const char * const MINRT_VERSION = "0.11";
+const char * const MINRT_VERSION = "1.00";
 
 enum class MultiThreadMethods {
   TASKDISPATCH = 1,

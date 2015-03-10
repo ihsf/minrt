@@ -5,7 +5,6 @@
 #include "SDLstuff.h"
 #include "Camera.h"
 #include "RT_RayTracer.h"
-#include "Etc1Fast.h"
 
 using namespace std;
 

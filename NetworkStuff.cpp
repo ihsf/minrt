@@ -10,7 +10,7 @@ enum CompressionAlgorithm
   CA_LZ4HC
 };
 
-CompressionAlgorithm compalg = CA_LZ4; // CA_NONE; //
+CompressionAlgorithm compalg = CA_LZ4; 
 
 NetworkStuff::NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer_){
   this->camera = camera_;
@@ -44,28 +44,28 @@ NetworkStuff::~NetworkStuff(){
 
 void NetworkStuff::init() {
 	if (SDLNet_Init() < 0){
-		cout << "SDLNet_Init server: Failed\n" << endl;
+		cout << "SDLNet_Init server: Failed" << endl;
 		exit(EXIT_FAILURE);
 	}
  
 	if (SDLNet_ResolveHost(&Engine::ip, NULL, Engine::serverPort) < 0){
-		cout << "SDLNet_ResolveHost: Failed\n" << endl;
+		cout << "SDLNet_ResolveHost: Failed" << endl;
 		exit(EXIT_FAILURE);
 	}
  
 	if (!(Engine::sd = SDLNet_TCP_Open(&Engine::ip))){
-		cout << "SDLNet_TCP_Open: Failed\n" << endl;
+		cout << "SDLNet_TCP_Open: Failed" << endl;
 		exit(EXIT_FAILURE);	
 	}
 
   cout << "Network protocol version: " << NETWORK_PROTOCOL_VERSION << endl;
-	cout << "SDLNet_TCP_Accept: Waiting for client\n" << endl;
+	cout << "SDLNet_TCP_Accept: Waiting for client" << endl;
 	while (!(Engine::csd = SDLNet_TCP_Accept(Engine::sd))) {
 		;		 
 	}
 
 	if (!(Engine::remoteIP = SDLNet_TCP_GetPeerAddress(Engine::csd))) {
-		cout << "SDLNet_TCP_GetPeerAddress: Failed\n" << endl;
+		cout << "SDLNet_TCP_GetPeerAddress: Failed" << endl;
 		exit(EXIT_FAILURE);
 	} else {
 		printf("Host connected: %x %d\n", SDLNet_Read32(&Engine::remoteIP->host), SDLNet_Read16(&Engine::remoteIP->port));

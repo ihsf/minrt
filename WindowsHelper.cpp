@@ -38,7 +38,7 @@ float WindowsHelper::getMsElapsed() {
   struct timeval tv;
   gettimeofday(&tv,NULL);
   double secs = (tv.tv_sec - last_tv.tv_sec) + 1e-6 * (tv.tv_usec - last_tv.tv_usec);
-	// make it ms
+	// convert to ms
 	secs *= 1000.0f;
 
   last_tv = tv;	

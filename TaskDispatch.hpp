@@ -1,3 +1,6 @@
+// https://bitbucket.org/wolfpld/etcpak
+// Bartosz Taudul <wolf.pld@gmail.com>
+
 #ifndef __DARKRL__TASKDISPATCH_HPP__
 #define __DARKRL__TASKDISPATCH_HPP__
 
