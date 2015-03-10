@@ -22,14 +22,12 @@ FIND_PACKAGE(Threads)
 
 SET(MINRT_SOURCES
 	Camera
-	CTexture
 	CVector2
 	CVector2i
 	CVector3
 	Dither
 	EmbreeStuff
 	Engine
-	Etc1Fast
 	lz4-r123/lz4
 	lz4-r123/lz4hc
 	MinRT
