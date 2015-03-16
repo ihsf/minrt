@@ -14,16 +14,16 @@
 
 class TaskDispatch
 {
-public:
-    TaskDispatch( size_t workers );
+  public:
+    TaskDispatch(size_t workers);
     ~TaskDispatch();
 
-    static void Queue( const std::function<void(void)>& f );
-    static void Queue( std::function<void(void)>&& f );
+    static void Queue(const std::function<void(void)>& f);
+    static void Queue(std::function<void(void)>&& f);
 
     static void Sync();
 
-private:
+  private:
     void Worker();
 
     std::queue<std::function<void(void)>> m_queue;

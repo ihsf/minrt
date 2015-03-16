@@ -15,28 +15,28 @@ RT_RayTracer::RT_RayTracer( Camera* gameCamera_){
 
   frameBuffer = NULL;
   blockFB = NULL;
-	internalCamera = NULL;
+  internalCamera = NULL;
   etcdata = NULL;
 }
 
 RT_RayTracer::~RT_RayTracer(){
   delete frameBuffer;
   delete blockFB;
-	delete internalCamera;
+  delete internalCamera;
   //delete[] etcdata;
 }
 
 void RT_RayTracer::initCamera(){
-	internalCamera = new RT_Camera();
+  internalCamera = new RT_Camera();
 
   internalCamera->setPosition(gameCamera->getPositionPointer());
   internalCamera->setLookAt(gameCamera->getViewPointer());
-	internalCamera->setUpVector(0,1,0);
+  internalCamera->setUpVector(0,1,0);
 
   const float tangensValueDEG2R = tanf(DEG2RAD(Engine::cg_fov / 2.0f));
   const float viewDistance = ((float)Engine::screenHeightRT / 2.0f) / tangensValueDEG2R;
-	
-	internalCamera->setViewDistance(viewDistance);
+  
+  internalCamera->setViewDistance(viewDistance);
   internalCamera->computeCameraCoordinateSystem();
 }
 
@@ -53,7 +53,7 @@ void RT_RayTracer::init(){
   }
 
   clearFrameBuffers();
-	initCamera();
+  initCamera();
 }
 
 void RT_RayTracer::clearFrameBuffers(){
@@ -62,11 +62,11 @@ void RT_RayTracer::clearFrameBuffers(){
 }
 
 unsigned char* RT_RayTracer::getFrameBuffer(){
-	Assert(frameBuffer, "getFrameBuffer");
-	unsigned char* returnMe = frameBuffer->getFrameBuffer();
+  Assert(frameBuffer, "getFrameBuffer");
+  unsigned char* returnMe = frameBuffer->getFrameBuffer();
 
-	Assert(returnMe, "getFrameBuffer");
-	return returnMe;
+  Assert(returnMe, "getFrameBuffer");
+  return returnMe;
 }
 
 void RT_RayTracer::renderFrame(){
@@ -75,7 +75,7 @@ void RT_RayTracer::renderFrame(){
 
   // in server mode, the server will be told which frame number it is working at through the network packet
   if(!Engine::server)  {
-	  Engine::numFramesRendered++;
+    Engine::numFramesRendered++;
   }
 }
 
@@ -178,12 +178,12 @@ void RT_RayTracer::renderFrameETC() {
 
 
 void RT_RayTracer::look(){
-	CVector3 position = gameCamera->getPosition();
+  CVector3 position = gameCamera->getPosition();
   internalCamera->setPosition(&position);
-	
+  
   CVector3 lookAt = position + gameCamera->getDirectionNormalized();
 
-	internalCamera->setLookAt(&lookAt);
+  internalCamera->setLookAt(&lookAt);
   internalCamera->setUpVector(gameCamera->getUpVectorPointer());
   internalCamera->computeCameraCoordinateSystem();
 }
@@ -198,7 +198,7 @@ void RT_RayTracer::createRenderingTasks(){
 
   const int numTiles = sizeY / Engine::RENDERLINE_SIZE;
 
-	// taking tiles from top to bottom
+  // taking tiles from top to bottom
   for(int i = 0; i < numTiles; i++){
     if (!Engine::rectMode){
       startPixel.x = 0;

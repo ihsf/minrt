@@ -9,8 +9,8 @@
 using namespace std;
 
 class RT_Task {
-	public:
-		RT_Task();
+  public:
+    RT_Task();
     virtual ~RT_Task(){};
 
     virtual void run() = 0;

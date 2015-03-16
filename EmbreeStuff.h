@@ -10,15 +10,15 @@
 #include "StanfordBunny.h"
 
 #ifdef _MSC_VER
-  #pragma warning( disable : 4996 ) // '*' was declared deprecated
+#pragma warning( disable : 4996 ) // '*' was declared deprecated
 #endif
 
 using namespace std;
 
 class EmbreeStuff {
-	public:
-		EmbreeStuff();
-		~EmbreeStuff();
+  public:
+    EmbreeStuff();
+    ~EmbreeStuff();
 
     static void init();
 
@@ -28,7 +28,7 @@ class EmbreeStuff {
       CVector3* originPointer;
       CVector3* directionPointer;
 
-      for(int i = 0; i < 4; i++){
+      for (int i = 0; i < 4; i++){
         originPointer = rayQuery[i].getOriginPointer();
         ray.orgx[i] = originPointer->x;
         ray.orgy[i] = originPointer->y;
@@ -48,13 +48,13 @@ class EmbreeStuff {
         ray.time[i] = 0.0f;
       }
 
-      __align(16) int valid[4] = {-1, -1, -1, -1};
+      __align(16) int valid[4] = { -1, -1, -1, -1 };
       rtcIntersect4(valid, scene, ray);
 
-      for(int i = 0; i < 4; i++){
+      for (int i = 0; i < 4; i++){
         RT_ShadingInfo* shadingInfoPointer = rayQuery[i].getShadingInfoPointer();
 
-        if(ray.geomID[i] == RTC_INVALID_GEOMETRY_ID){
+        if (ray.geomID[i] == RTC_INVALID_GEOMETRY_ID){
           continue;
         }
 
@@ -72,7 +72,7 @@ class EmbreeStuff {
       CVector3* originPointer;
       CVector3* directionPointer;
 
-      for(int i = 0; i < 8; i++){
+      for (int i = 0; i < 8; i++){
         originPointer = rayQuery[i].getOriginPointer();
         ray.orgx[i] = originPointer->x;
         ray.orgy[i] = originPointer->y;
@@ -84,7 +84,7 @@ class EmbreeStuff {
         ray.dirz[i] = directionPointer->z;
 
         ray.tnear[i] = 0.0f;
-        ray.tfar[i] = DEFAULT_RAY_MAX_DISTANCE;ray.geomID[i] = RTC_INVALID_GEOMETRY_ID;
+        ray.tfar[i] = DEFAULT_RAY_MAX_DISTANCE; ray.geomID[i] = RTC_INVALID_GEOMETRY_ID;
         ray.primID[i] = RTC_INVALID_GEOMETRY_ID;
         ray.instID[i] = RTC_INVALID_GEOMETRY_ID;
         ray.mask[i] = 0xFFFFFFFF;
@@ -94,10 +94,10 @@ class EmbreeStuff {
       __align(32) int valid[8] = { -1, -1, -1, -1, -1, -1, -1, -1 };
       rtcIntersect8(valid, scene, ray);
 
-      for(int i = 0; i < 8; i++){
+      for (int i = 0; i < 8; i++){
         RT_ShadingInfo* shadingInfoPointer = rayQuery[i].getShadingInfoPointer();
 
-        if(ray.geomID[i] == RTC_INVALID_GEOMETRY_ID){
+        if (ray.geomID[i] == RTC_INVALID_GEOMETRY_ID){
           continue;
         }
 
@@ -117,11 +117,11 @@ class EmbreeStuff {
 
     static __align(32)RTCScene scene;
 
-	private:
-    struct Vertex   { float x,y,z,a; };
+  private:
+    struct Vertex   { float x, y, z, a; };
     struct Triangle { int v0, v1, v2; };
 
-    static bool compiledOnce;    
+    static bool compiledOnce;
 };
 
 #endif

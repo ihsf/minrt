@@ -14,23 +14,23 @@
 #include <SDL.h>				
 
 class OpenGLstuff{
-	public:
+  public:
     OpenGLstuff(RT_RayTracer* rayTracer_);
-		~OpenGLstuff();
+    ~OpenGLstuff();
 
     void init(SDL_Window* mainWindow_);
 
-		void render();
-		void swapBuffers();
+    void render();
+    void swapBuffers();
 
-	private:		
+  private:
     SDL_Window* mainWindow;
     RT_RayTracer* rayTracer;
 
-		void generateFramebufferTexture();
+    void generateFramebufferTexture();
 
-		void setVSync(int interval);
-		unsigned int framebufferTexID;  
+    void setVSync(int interval);
+    unsigned int framebufferTexID;
 };
 
 

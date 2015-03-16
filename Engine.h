@@ -28,15 +28,15 @@
 using namespace std;
 
 #ifdef _MSC_VER
-	#pragma warning(disable: 4244) // conversion from 'const double' to 'float', possible loss of data
-	#pragma warning(disable: 4996) // '*' was declared deprecated
+  #pragma warning(disable: 4244) // conversion from 'const double' to 'float', possible loss of data
+  #pragma warning(disable: 4996) // '*' was declared deprecated
 #endif
 
 #ifdef __INTEL_COMPILER
-	#pragma warning(disable: 1786) // function strcpy was declared deprecated ...
-	#pragma warning(disable: 279)
-	#pragma warning(disable: 1478) //  function "alutLoadWAVFile" was declared "deprecated"
-	#pragma warning(disable: 589)  //  transfer of control bypasses initialization of
+  #pragma warning(disable: 1786) // function strcpy was declared deprecated ...
+  #pragma warning(disable: 279)
+  #pragma warning(disable: 1478) //  function "alutLoadWAVFile" was declared "deprecated"
+  #pragma warning(disable: 589)  //  transfer of control bypasses initialization of
 #endif
 
 #define Assert(a,b) assert( a && b )
@@ -89,34 +89,34 @@ enum class MultiThreadMethods {
 };
 
 class Engine {
-	public:
-		Engine(){};
-		~Engine(){};
+  public:
+    Engine(){};
+    ~Engine(){};
     
     static void init(int argc, char *argv[]);
 
     // resolution ray tracer and openGL for diplaying
-		static int screenWidthRT; 
-		static int screenHeightRT;
-		static int screenWidthGL; 
-		static int screenHeightGL; 
+    static int screenWidthRT; 
+    static int screenHeightRT;
+    static int screenWidthGL; 
+    static int screenHeightGL; 
 
-		static int RENDERLINE_SIZE;
+    static int RENDERLINE_SIZE;
 
-		// keys & mouse
-		static bool upKey;
-		static bool downKey; 
-		static bool leftKey; 
-		static bool rightKey;
-		static bool leftButton;
-		static bool rightButton;
-		static bool jumpKey;
+    // keys & mouse
+    static bool upKey;
+    static bool downKey; 
+    static bool leftKey; 
+    static bool rightKey;
+    static bool leftButton;
+    static bool rightButton;
+    static bool jumpKey;
     static bool crouchKey;
-		static bool done;
+    static bool done;
 
     static bool server;
 
-		static float currentTime;
+    static float currentTime;
 
     static MultiThreadMethods methodToMultiThread;
 
@@ -161,7 +161,7 @@ class Engine {
 
     static bool isPointInsideRect(int x, int y);
 
-	private:		
+  private:		
     static float lastTime;				// This will hold the time from the last frame	
     static void parseArgv(int argc, char *argv[]);
 };

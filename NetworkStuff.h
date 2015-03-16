@@ -17,8 +17,8 @@ struct clientMessage{
   CVector3 cameraView;
   CVector3 cameraUp;
 
-	int screenWidthRT;
-	int screenHeightRT;
+  int screenWidthRT;
+  int screenHeightRT;
 
   int rectLeft;
   int rectTop;
@@ -32,28 +32,28 @@ struct clientMessage{
 };
 
 class NetworkStuff {
-	public:
-		NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer);
-		~NetworkStuff();
+  public:
+    NetworkStuff(Camera* camera_, RT_RayTracer* rayTracer);
+    ~NetworkStuff();
 
-		void shutdown();
+    void shutdown();
 
-		void sendMessageToGameClient();
-		void receiveMessageFromGameClient();
+    void sendMessageToGameClient();
+    void receiveMessageFromGameClient();
 
-	private:
-		Camera* camera;
-		RT_RayTracer* rayTracer;
-		
-		unsigned char* outputBuffer;
-		unsigned char* frameBufferCopy;
+  private:
+    Camera* camera;
+    RT_RayTracer* rayTracer;
+
+    unsigned char* outputBuffer;
+    unsigned char* frameBufferCopy;
     char* lz4Buf;
 
-		int numBytesToSend;
+    int numBytesToSend;
 
-		void init();
-		void determineNumBytesToSend();		
-		void receiveInitPacket();
+    void init();
+    void determineNumBytesToSend();
+    void receiveInitPacket();
 
     void sendMessageToGameClientETC1noThread();
 

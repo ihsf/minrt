@@ -9,23 +9,23 @@
 using namespace std;
 
 class RT_ShadingInfo {
-	public:
-		finline RT_ShadingInfo(){
-			reset();
-		}
+  public:
+    finline RT_ShadingInfo(){
+      reset();
+    }
 
     float hitBeta;  // barycentric coords
     float hitGamma;
 
-		float t;
+    float t;
 
     int objectThatGotHit;
     int primIdThatGotHit;
 
-		finline void reset(){
-			objectThatGotHit = -1;
+    finline void reset(){
+      objectThatGotHit = -1;
       primIdThatGotHit = -1;
-		}
+    }
 
   private:
 

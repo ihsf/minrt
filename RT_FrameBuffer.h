@@ -11,18 +11,18 @@ using namespace std;
 
 // only 32 bit RGBA supported
 class RT_FrameBuffer {
-	public:
-		RT_FrameBuffer(int sizeX, int sizeY);
-		~RT_FrameBuffer();
+  public:
+    RT_FrameBuffer(int sizeX, int sizeY);
+    ~RT_FrameBuffer();
 
     finline int getSizeX(){ return sizeX; }
     finline int getSizeY(){ return sizeY; }
     finline int getBytesPerPixel(){ return bytesPerPixel; }
     finline unsigned char* getFrameBuffer() { return frameBuffer; }
-    
+
     void clear();
 
-	private:
+  private:
     unsigned char* frameBuffer;
     int sizeX;
     int sizeY;

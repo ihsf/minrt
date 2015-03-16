@@ -12,13 +12,13 @@
 
 int System::CPUCores()
 {
-    static int cores = 0;
-    if( cores == 0 )
-    {
+  static int cores = 0;
+  if (cores == 0)
+  {
 #ifdef _WIN32
-        SYSTEM_INFO info;
-        GetSystemInfo( &info );
-        cores = (int)info.dwNumberOfProcessors;
+    SYSTEM_INFO info;
+    GetSystemInfo(&info);
+    cores = (int)info.dwNumberOfProcessors;
 #else
 #  ifndef _SC_NPROCESSORS_ONLN
 #    ifdef _SC_NPROC_ONLN
@@ -27,12 +27,12 @@ int System::CPUCores()
 #      define _SC_NPROCESSORS_ONLN _SC_CRAY_NCPU
 #    endif
 #  endif
-        cores = (int)(long)sysconf( _SC_NPROCESSORS_ONLN );
+    cores = (int)(long)sysconf( _SC_NPROCESSORS_ONLN );
 #endif
-        if( cores <= 0 )
-        {
-            cores = 1;
-        }
+    if (cores <= 0)
+    {
+      cores = 1;
     }
-    return cores;
+  }
+  return cores;
 }

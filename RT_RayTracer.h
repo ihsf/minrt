@@ -16,11 +16,11 @@
 using namespace std;
 
 class RT_RayTracer {
-	public:
-		RT_RayTracer(Camera* gameCamera_);
-		~RT_RayTracer();
+  public:
+    RT_RayTracer(Camera* gameCamera_);
+    ~RT_RayTracer();
 
-		void init();
+    void init();
 
     void look();
     void renderFrame();
@@ -28,24 +28,24 @@ class RT_RayTracer {
 
     unsigned char* getFrameBuffer();
     const unsigned char* getDataETC() const { return etcdata; }
-    Camera* getGameCamera(){ return gameCamera;}  
+    Camera* getGameCamera(){ return gameCamera; }
 
     void clearFrameBuffers();
 
-	private:
-    Camera* gameCamera;			
+  private:
+    Camera* gameCamera;
 
     RT_TaskManager taskManager;
-    
-		void initCamera();
+
+    void initCamera();
 
     void renderScene();
 
     void createRenderingTasks();
-		void waitForAllThreads();
-		void runTasksOpenMP();
-		void runTasksCilk();
-		void runTasksOpenMPT();
+    void waitForAllThreads();
+    void runTasksOpenMP();
+    void runTasksCilk();
+    void runTasksOpenMPT();
     void runTasksTaskDispatcher();
 
     RT_Camera* internalCamera;

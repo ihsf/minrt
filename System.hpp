@@ -8,7 +8,7 @@
 
 class System
 {
-public:
+  public:
     System() = delete;
 
     static int CPUCores();

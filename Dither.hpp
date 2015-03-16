@@ -8,6 +8,6 @@
 #include <stdint.h>
 
 void InitDither();
-void Dither( uint8_t* data );
+void Dither(uint8_t* data);
 
 #endif

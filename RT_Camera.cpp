@@ -5,9 +5,9 @@ RT_Camera::RT_Camera(){
   lookAt = VECTOR1_0_0;
   up = VECTOR0_1_0;
 
-	u = VECTOR1_0_0;
-	v = VECTOR0_1_0;
-	w = VECTOR0_0_1;
+  u = VECTOR1_0_0;
+  v = VECTOR0_1_0;
+  w = VECTOR0_0_1;
 
   viewDistance = 0.0f;
 }
@@ -29,10 +29,10 @@ void RT_Camera::setupRayQuery(int x, int y, float sizeXminus1Half, float sizeYmi
 
 void RT_Camera::computeCameraCoordinateSystem(){
   w = position - lookAt;
-	w.normalize();
-	u = up.cross(up, w);
-	u.normalize();
-	v = w.cross(w, u);
+  w.normalize();
+  u = up.cross(up, w);
+  u.normalize();
+  v = w.cross(w, u);
 }
 
 

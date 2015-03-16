@@ -15,32 +15,32 @@
 using namespace std;
 
 class RT_TaskRenderTile : public RT_Task {
-	public:
-		RT_TaskRenderTile(CVector2i* startPixel_, RT_Camera* camera_, RT_FrameBuffer* frameBuffer_, int tileNumber_);
+  public:
+    RT_TaskRenderTile(CVector2i* startPixel_, RT_Camera* camera_, RT_FrameBuffer* frameBuffer_, int tileNumber_);
     ~RT_TaskRenderTile(){};
 
-    void run(); 
+    void run();
 
   private:
     CVector2i startPixel;
-		RT_Camera* camera;
+    RT_Camera* camera;
     RT_FrameBuffer* frameBuffer;
 
-		int tileNumber;
+    int tileNumber;
 
     unsigned char* fBuffer;
 
-		int sizeX;
+    int sizeX;
     int sizeXtimes4;
 
-		finline void putColorInFrameBuffer(int x, int y, CVector3* color){ 
-			Assert(color, "putColorInFrameBuffer");
-			const int offset = x * 4 + y * sizeXtimes4;       
+    finline void putColorInFrameBuffer(int x, int y, CVector3* color){
+      Assert(color, "putColorInFrameBuffer");
+      const int offset = x * 4 + y * sizeXtimes4;
 
-			fBuffer[offset    ] = color->x * 255.0f;
-			fBuffer[offset + 1] = color->y * 255.0f;
-			fBuffer[offset + 2] = color->z * 255.0f;
-		}
+      fBuffer[offset] = color->x * 255.0f;
+      fBuffer[offset + 1] = color->y * 255.0f;
+      fBuffer[offset + 2] = color->z * 255.0f;
+    }
 };
 
 

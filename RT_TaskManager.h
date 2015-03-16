@@ -10,9 +10,9 @@
 using namespace std;
 
 class RT_TaskManager {
-	public:
-		RT_TaskManager();
-		~RT_TaskManager();
+  public:
+    RT_TaskManager();
+    ~RT_TaskManager();
 
     void addTaskRenderTile(RT_TaskRenderTile* taskRenderTile);
     void deleteAllTasks();

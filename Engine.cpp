@@ -94,11 +94,10 @@ int Engine::rectSizeX = -1;
 int Engine::rectSizeY = -1;
 bool Engine::rectMode = false;
 
-
 CVector2i Engine::relativeMouseMotion;
 
 void Engine::init(int argc, char *argv[]){
-	cout << "Engine initialized." << endl;
+  cout << "Engine initialized." << endl;
   if (screenHeightRT % RENDERLINE_SIZE != 0){
     cout << "Invalid screenWidthRT or screenHeightRT for RENDERTILE_SIZE" << endl;
     exit(1);

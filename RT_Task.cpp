@@ -5,6 +5,6 @@ RT_Task::RT_Task(){
 }
 
 void RT_Task::setDescription(const char* const taskDescription){
-	Assert(taskDescription, "RT_Task::setDescription");
+  Assert(taskDescription, "RT_Task::setDescription");
   strncpy(description, taskDescription, DEBUG_STRING_SIZE - 1);
 }
