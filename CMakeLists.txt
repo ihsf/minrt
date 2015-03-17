@@ -55,8 +55,8 @@ SET(MINRT_SOURCES
 #SET(OMP_FLAGS "-fopenmp ")
 
 # ICC
-SET(CILK_FLAGS "-lcilkrts")
-SET(OMP_FLAGS "-openmp ")
+#SET(CILK_FLAGS "-lcilkrts")
+#SET(OMP_FLAGS "-openmp ")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${CILK_FLAGS} ${OMP_FLAGS}")
 
