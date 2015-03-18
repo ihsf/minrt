@@ -14,7 +14,7 @@ LINK_DIRECTORIES(${SDL2_LIBRARY_DIRS})
 
 # Embree setup
 SET(EMBREE_DIR "" CACHE PATH "Embree source directory")
-FIND_LIBRARY(EMBREE_LIB NAMES embree PATHS ${EMBREE_DIR} ${EMBREE_DIR}/build)
+FIND_LIBRARY(EMBREE_LIB NAMES embree embree.2 PATHS ${EMBREE_DIR} ${EMBREE_DIR}/lib/x64 ${EMBREE_DIR}/build)
 INCLUDE_DIRECTORIES("${EMBREE_DIR}/include")
 
 # pthread on GNU/Linux
@@ -55,8 +55,8 @@ SET(MINRT_SOURCES
 #SET(OMP_FLAGS "-fopenmp ")
 
 # ICC
-SET(CILK_FLAGS "-lcilkrts")
-SET(OMP_FLAGS "-openmp ")
+#SET(CILK_FLAGS "-lcilkrts")
+#SET(OMP_FLAGS "-openmp ")
 
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 ${CILK_FLAGS} ${OMP_FLAGS}")
 
