@@ -12,6 +12,12 @@ libSDL2, libSDL_Net 2
 =====================
 See text files in \SDL folder.
 
+LZ4
+===
+LZ4 - Fast LZ compression algorithm
+, Copyright (C) 2011-2014, Yann Collet.
+   BSD 2-Clause License (http://www.opensource.org/licenses/bsd-license.php)
+
 www.gametutorials.com
 =====================
 Some code from the classes for the Camera, CVector2 and CVector3 are based on code from www.gametutorials.com.
